@@ -28,7 +28,7 @@
     "pack:packages": "npm pack --workspaces --if-present",
     "changeset": "changeset",
     "version:packages": "changeset version",
-    "release": "changeset publish --tag beta"
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.7",
