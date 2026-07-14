@@ -4,8 +4,8 @@
 interaction requires it.** No Virtual DOM. Zero JS by default. Signals,
 islands, file-based SSR routing — compiled, not reconciled.
 
-> نجم — "star" in Arabic. Pre-release (`0.3.0-dev`): not yet published to
-> npm; API stability tiers are defined in
+> نجم — "star" in Arabic. Beta (`0.3.0-beta.0`): install from npm with
+> `npm install najm@beta`; API stability tiers are defined in
 > [RFC-0018](docs/rfcs/RFC-0018-public-api-stability.md).
 
 ```ts

@@ -1,8 +1,8 @@
 # Getting started
 
-> **Pre-release honesty note:** Najm is `0.3.0-dev` and **not yet published
-> to npm**. There is no `npm install najm` today — you work from a clone of
-> this repository, and the `najm` CLI is invoked through it
+> **Beta honesty note:** Najm's four library packages are published as
+> `0.3.0-beta.0` under npm's `beta` tag. The `najm` CLI is not yet published,
+> so the full application workflow still uses a repository clone and invokes it
 > (`npm run cli -- <command>` or `npx tsx cli/najm.ts <command>`). The
 > `create-najm-app` scaffolder exists as a subcommand of that same CLI.
 
@@ -14,7 +14,7 @@
 ## 1. Clone and install
 
 ```bash
-git clone <this-repo> najm && cd najm
+git clone https://github.com/Monsef-Noubadji/Najm.git najm && cd najm
 npm install
 ```
 

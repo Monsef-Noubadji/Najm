@@ -2,11 +2,14 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: {
-    index: '../../runtime/index.ts',
+    dev: '../../server/dev.ts',
+    build: '../../server/build.ts',
+    serve: '../../server/serve.ts',
   },
   format: ['esm'],
   dts: true,
   sourcemap: true,
   clean: true,
-  target: 'es2022',
+  target: 'node20',
+  external: ['vite'],
 });

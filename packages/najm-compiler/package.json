@@ -1,29 +1,45 @@
 {
   "name": "najm-compiler",
-  "version": "0.3.0-dev",
+  "version": "0.3.0-beta.0",
   "description": "The Najm compiler: .najm functional components → SSR string builders + hydration claim-walks. Includes the Vite plugin.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monsef-Noubadji/Najm.git",
+    "directory": "packages/najm-compiler"
+  },
+  "homepage": "https://github.com/Monsef-Noubadji/Najm#readme",
+  "bugs": {
+    "url": "https://github.com/Monsef-Noubadji/Najm/issues"
+  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
-  "engines": { "node": ">=20" },
-  "files": ["dist", "README.md"],
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./vite": {
-      "types": "./dist/vite.d.ts",
-      "default": "./dist/vite.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./plugin-api": {
+      "types": "./dist/plugin-api.d.ts",
+      "default": "./dist/plugin-api.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup --config tsup.config.ts",
     "prepublishOnly": "npm run build"
-  },
-  "dependencies": {
-    "najm": "workspace:*"
   },
   "peerDependencies": {
     "vite": ">=5"
@@ -33,5 +49,9 @@
     "typescript": "^5.7.0",
     "vite": "^6.0.0"
   },
-  "keywords": ["compiler", "vite-plugin", "najm"]
+  "keywords": [
+    "compiler",
+    "vite-plugin",
+    "najm"
+  ]
 }

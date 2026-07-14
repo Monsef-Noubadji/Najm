@@ -1,30 +1,45 @@
 {
   "name": "najm-server",
-  "version": "0.3.0-dev",
-  "description": "Najm's SSR dev server and `najm dev` CLI entry point. Routing lives in najm-router.",
+  "version": "0.3.0-beta.0",
+  "description": "Najm's executable SSR development, production build, and preview server entry modules.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monsef-Noubadji/Najm.git",
+    "directory": "packages/najm-server"
+  },
+  "homepage": "https://github.com/Monsef-Noubadji/Najm#readme",
+  "bugs": {
+    "url": "https://github.com/Monsef-Noubadji/Najm/issues"
+  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
-  "engines": { "node": ">=20" },
-  "files": ["dist", "README.md"],
-  "bin": {
-    "najm": "./dist/cli.js"
+  "engines": {
+    "node": ">=20"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+    "./dev": {
+      "types": "./dist/dev.d.ts",
+      "default": "./dist/dev.js"
+    },
+    "./build": {
+      "types": "./dist/build.d.ts",
+      "default": "./dist/build.js"
+    },
+    "./serve": {
+      "types": "./dist/serve.d.ts",
+      "default": "./dist/serve.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup --config tsup.config.ts",
     "prepublishOnly": "npm run build"
-  },
-  "dependencies": {
-    "najm": "workspace:*",
-    "najm-compiler": "workspace:*",
-    "najm-router": "workspace:*"
   },
   "peerDependencies": {
     "vite": ">=5"
@@ -34,5 +49,9 @@
     "typescript": "^5.7.0",
     "vite": "^6.0.0"
   },
-  "keywords": ["ssr", "islands", "najm"]
+  "keywords": [
+    "ssr",
+    "islands",
+    "najm"
+  ]
 }

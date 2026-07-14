@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "najm": "0.3.0-dev",
+    "najm-compiler": "0.3.0-dev",
+    "najm-router": "0.3.0-dev",
+    "najm-server": "0.3.0-dev"
+  },
+  "changesets": [
+    "bright-stars-build"
+  ]
+}

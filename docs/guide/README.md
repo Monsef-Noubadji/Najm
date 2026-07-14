@@ -17,9 +17,11 @@ page. Routing is file-based (`src/pages/**`) with nested layouts, middleware,
 dynamic segments, and a production build that pre-renders every route it can
 to static HTML.
 
-Najm is **pre-release** (`0.3.0-dev`) and not yet published to npm — today
-you use it from a clone of this repository. API stability tiers are defined
-in [RFC-0018](../rfcs/RFC-0018-public-api-stability.md).
+Najm is a **beta** (`0.3.0-beta.0`). The runtime, compiler, router, and server
+artifacts are published under npm's `beta` tag. The CLI remains repository-only
+until its language-server dependency has a supported package boundary. API
+stability tiers are defined in
+[RFC-0018](../rfcs/RFC-0018-public-api-stability.md).
 
 ## The guide
 

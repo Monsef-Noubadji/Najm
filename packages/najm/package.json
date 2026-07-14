@@ -1,12 +1,27 @@
 {
   "name": "najm",
-  "version": "0.3.0-dev",
+  "version": "0.3.0-beta.0",
   "description": "Najm's reactivity core, component runtime, lifecycle, and hydration engine.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monsef-Noubadji/Najm.git",
+    "directory": "packages/najm"
+  },
+  "homepage": "https://github.com/Monsef-Noubadji/Najm#readme",
+  "bugs": {
+    "url": "https://github.com/Monsef-Noubadji/Najm/issues"
+  },
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
-  "engines": { "node": ">=20" },
-  "files": ["dist", "README.md"],
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -26,5 +41,12 @@
     "tsup": "^8.0.0",
     "typescript": "^5.7.0"
   },
-  "keywords": ["signals", "reactivity", "islands", "ssr", "hydration", "najm"]
+  "keywords": [
+    "signals",
+    "reactivity",
+    "islands",
+    "ssr",
+    "hydration",
+    "najm"
+  ]
 }

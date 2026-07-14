@@ -49,7 +49,7 @@ together they are the source of truth for how Najm is built and why.
 | [0016](./RFC-0016-security-model.md) | Security Model | Implemented (found and fixed a real cross-request data race in shipped SSR code — see its own Verification) |
 | [0017](./RFC-0017-browser-compatibility.md) | Browser Compatibility | Accepted |
 | [0018](./RFC-0018-public-api-stability.md) | Public API Stability | Accepted (with a post-acceptance revision note — RFC-0016's fix changed a Tier 1 signature) |
-| [0019](./RFC-0019-release-strategy.md) | Release Strategy | Draft (found a real, unresolved packaging discrepancy between `packages/najm-server` and the actual `cli/` — documented, not silently fixed) |
+| [0019](./RFC-0019-release-strategy.md) | Release Strategy | Implemented (four npm workspace packages, fixed Changesets beta line, verified tarballs; CLI explicitly deferred) |
 | [0020](./RFC-0020-long-term-roadmap.md) | Long-term Roadmap | Draft (real backlog inventory + one data-motivated investigation from RFC-0014's actual benchmark numbers) |
 
 All 20 RFCs now have real content — no bare stubs remain. Every

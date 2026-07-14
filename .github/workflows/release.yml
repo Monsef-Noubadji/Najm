@@ -22,26 +22,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
+          cache: npm
           registry-url: https://registry.npmjs.org
 
-      - run: pnpm install --frozen-lockfile
+      - run: npm ci
 
       # Gate: nothing publishes unless the whole surface is green.
-      - run: pnpm -r test
-      - run: pnpm -r typecheck
-      - run: pnpm -r build
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build:packages
 
       - name: Version or publish
         uses: changesets/action@v1
         with:
           # Beta line publishes under the `beta` dist-tag; `latest` stays
           # on the last stable until Beta graduates.
-          publish: pnpm changeset publish --tag beta
+          publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
