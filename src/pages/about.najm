@@ -1,0 +1,23 @@
+<script>
+  const facts = [
+    "Every page is server-rendered HTML first.",
+    "This page has no islands, so it ships zero JavaScript. View source — there is no <script> tag.",
+    "The route came from the filename: src/pages/about.najm → /about.",
+  ];
+</script>
+
+<template>
+  <main>
+    <h1>About Najm</h1>
+    <ul>
+      {#each facts as fact}
+        <li>{fact}</li>
+      {/each}
+    </ul>
+    <p><a href="/">← home</a></p>
+  </main>
+</template>
+
+<style>
+  main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem; font-family: system-ui, sans-serif; }
+</style>

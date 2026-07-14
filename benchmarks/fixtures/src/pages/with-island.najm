@@ -1,0 +1,18 @@
+import Widget from "../components/Widget.najm";
+
+/**
+ * Bundle-size fixture: one page with exactly one non-trivial island
+ * (see src/components/Widget.najm). Used to measure the island chunk's
+ * raw/gzip size and confirm it imports the shared runtime externally
+ * rather than bundling a private copy.
+ */
+export default function WithIsland(props = {}) {
+  return {
+    template: `
+      <main>
+        <h1>With-island benchmark fixture</h1>
+        <Widget client:load initial={0} />
+      </main>
+    `,
+  };
+}

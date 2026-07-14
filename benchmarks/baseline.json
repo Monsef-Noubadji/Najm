@@ -1,0 +1,17 @@
+{
+  "bundleSize": {
+    "runtimeRaw": 23145,
+    "runtimeGzip": 7704,
+    "islandChunkRaw": 1848,
+    "islandChunkGzip": 885
+  },
+  "hydrationCost": {
+    "lowNMedianMs": 6.55,
+    "highNMedianMs": 14.75,
+    "ratio": 2.252
+  },
+  "signalLatency": {
+    "nSignalsOneEffectEachMedianMs": 0.294,
+    "oneSignalNEffectsMedianMs": 0.229
+  }
+}

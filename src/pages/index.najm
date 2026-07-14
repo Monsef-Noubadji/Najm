@@ -1,0 +1,70 @@
+import TodoList from "../components/TodoList.najm";
+
+/**
+ * Functional page. Pages are functional components too — they just
+ * happen to render exactly once, on the server, and never hydrate.
+ */
+export default function HomePage(props = {}) {
+  const renderedAt = new Date().toUTCString();
+  const pillars = [
+    { name: "Functional instances", blurb: "components are closures — setup runs once, the returned view adopts the DOM" },
+    { name: "Lifecycle hooks",      blurb: "onMounted / onUpdated / onDestroyed, attached to the reactivity graph itself" },
+    { name: "AOT static hoisting",  blurb: "static subtrees compile to one claim call, never walked node-by-node" },
+    { name: "Zero JS by default",   blurb: "pages ship HTML; only client:load islands bring their own JavaScript" },
+  ];
+
+  return {
+    template: `
+      <main>
+        <header>
+          <h1>Najm <em class="beta">beta</em></h1>
+          <p class="tag">Functional components · lifecycle hooks · multi-framework islands.</p>
+          <p class="meta">Server-rendered at {renderedAt}. The page itself ships no JavaScript — each island below brings exactly its own.</p>
+        </header>
+
+        <section>
+          <h2>What changed in Beta</h2>
+          <ul class="pillars">
+            {#each pillars as p, i}
+              <li><span class="num">{i + 1}</span> <strong>{p.name}</strong> — {p.blurb}</li>
+            {/each}
+          </ul>
+        </section>
+
+        <TodoList client:load initial={["Ship Najm v1.0", "Write RFC-0001 through RFC-0008", "Keep the runtime small"]} />
+
+        <footer>
+          <p>Routing demo: <a href="/about">/about</a> (legacy SFC, still compiles) · <a href="/greet/ada">/greet/ada</a> (dynamic segment)</p>
+        </footer>
+      </main>
+    `,
+
+    style: `
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: #1f2937;
+        background: #fafaf9;
+        line-height: 1.55;
+      }
+      main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+      h1 {
+        font-size: 3rem; margin: 0; letter-spacing: -0.03em;
+        background: linear-gradient(90deg, #6d28d9, #db2777);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      h1 .beta { font-size: 1.1rem; font-style: normal; vertical-align: super; color: #db2777; -webkit-text-fill-color: #db2777; }
+      .tag { font-size: 1.15rem; color: #4b5563; margin: 0.25rem 0 0.75rem; }
+      .meta { font-size: 0.85rem; color: #9ca3af; }
+      .pillars { list-style: none; padding: 0; }
+      .pillars li { padding: 0.35rem 0; }
+      .pillars .num {
+        display: inline-block; width: 1.4rem; height: 1.4rem; text-align: center;
+        line-height: 1.4rem; font-size: 0.75rem; font-weight: 700;
+        color: #6d28d9; background: #ede9fe; border-radius: 999px; margin-right: 0.35rem;
+      }
+      footer { margin-top: 2.5rem; font-size: 0.9rem; color: #6b7280; }
+      a { color: #6d28d9; }
+    `,
+  };
+}

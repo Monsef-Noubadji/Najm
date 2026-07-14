@@ -1,0 +1,33 @@
+import SafeCrasher from "../components/SafeCrasher.ts";
+
+/**
+ * RFC-0006 error-boundary live demo. Functional-component style (not the
+ * <script>/<template>/<style> SFC style) because component-tag resolution
+ * for a non-.najm import (SafeCrasher.ts) is only supported by the
+ * functional compiler's scanComponentImports, which is extension-
+ * agnostic — the SFC compiler's processScript only rewrites/records
+ * `.najm` imports (see compiler/codegen.ts).
+ */
+export default function ErrorBoundaryDemoPage(props = {}) {
+  return {
+    template: `
+      <main>
+        <h1>RFC-0006 error boundary demo</h1>
+        <p>The component below is deliberately given a bad prop and throws during ssr(). It is wrapped in withErrorBoundary (see src/components/SafeCrasher.ts), so the page still renders — the fallback markup below replaces the crashed component's output instead of 500ing the whole request.</p>
+
+        <h2>Boundary-wrapped, bad prop (should show fallback)</h2>
+        <SafeCrasher bad="yes" />
+
+        <h2>Boundary-wrapped, good prop (should render normally)</h2>
+        <SafeCrasher />
+
+        <p><a href="/">← home</a></p>
+      </main>
+    `,
+    style: `
+      main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 4rem; font-family: system-ui, sans-serif; }
+      .crasher-fallback { padding: 1rem; border: 1px solid #dc2626; background: #fef2f2; color: #991b1b; border-radius: 8px; }
+      .crasher-ok { padding: 1rem; border: 1px solid #16a34a; background: #f0fdf4; border-radius: 8px; }
+    `,
+  };
+}

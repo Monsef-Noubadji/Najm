@@ -1,0 +1,30 @@
+{
+  "name": "najm",
+  "version": "0.3.0-dev",
+  "private": true,
+  "description": "Najm — a compiler-first reactive framework that ships JavaScript only where user interaction requires it.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server/dev.ts",
+    "build": "tsx server/build.ts",
+    "serve": "tsx server/serve.ts",
+    "lsp": "tsx language-server/server.ts",
+    "cli": "tsx cli/najm.ts",
+    "test": "tsx tests/test-signals.ts && tsx tests/test-lifecycle.ts && tsx tests/test-scheduler.ts && tsx tests/test-hoisting.ts && tsx tests/test-ir.ts && tsx tests/test-semantics.ts && tsx tests/test-store.ts && tsx tests/test-router.ts && tsx tests/test-runtime-boundary.ts && tsx tests/test-error-boundary.ts && tsx tests/test-partial-hydration.ts && tsx tests/test-devtools.ts && tsx tests/test-language-server.ts && tsx tests/test-vscode-client.ts && tsx tests/test-build.ts && tsx tests/test-bundle-size.ts && tsx tests/test-cli.ts && tsx tests/test-plugin-api.ts && tsx tests/test-request-isolation.ts && tsx tests/test-suite-registration.ts",
+    "bench": "tsx benchmarks/run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.125.0",
+    "playwright": "^1.61.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^10.1.0",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12"
+  }
+}

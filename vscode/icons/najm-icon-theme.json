@@ -1,0 +1,12 @@
+{
+  "iconDefinitions": {
+    "_najm": {
+      "iconPath": "./najm-file.svg"
+    }
+  },
+  "fileExtensions": {
+    "najm": "_najm"
+  },
+  "file": "_najm",
+  "hidesExplorerArrows": false
+}

@@ -1,0 +1,48 @@
+# Najm release pipeline blueprint (Phase 5).
+# Changesets drives versioning; publish carries npm provenance so every
+# tarball is cryptographically tied to this repo + CI run.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: release-${{ github.ref }}
+
+permissions:
+  contents: write # changesets opens the "Version Packages" PR
+  id-token: write # npm --provenance attestation
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+
+      # Gate: nothing publishes unless the whole surface is green.
+      - run: pnpm -r test
+      - run: pnpm -r typecheck
+      - run: pnpm -r build
+
+      - name: Version or publish
+        uses: changesets/action@v1
+        with:
+          # Beta line publishes under the `beta` dist-tag; `latest` stays
+          # on the last stable until Beta graduates.
+          publish: pnpm changeset publish --tag beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'

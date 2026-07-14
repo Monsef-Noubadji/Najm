@@ -1,0 +1,11 @@
+<script resumable>
+  import { signal } from "mono/core";
+  const count = signal(0);
+</script>
+
+<template>
+  <div class="resumable-counter">
+    <span>Resumable count: {count}</span>
+    <button (click)={count.value++}>+1 (resumable)</button>
+  </div>
+</template>

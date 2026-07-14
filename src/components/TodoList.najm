@@ -1,0 +1,92 @@
+import { signal, computed, onMounted, onUpdated, onDestroyed } from "najm/core";
+
+/**
+ * Beta functional component. The function body runs once per instance —
+ * on the server for HTML, on the client at hydration — and everything
+ * the template needs is plain lexical scope. The compiler statically
+ * extracts the `template` backtick below and replaces it with generated
+ * ssr()/hydrate() closures over these very variables.
+ */
+export default function TodoList(props = {}) {
+  let nextId = 0;
+  const seed = (text) => ({ id: nextId++, text, done: signal(false) });
+
+  const todos = signal((props.initial ?? []).map(seed));
+  const draft = signal("");
+  const remaining = computed(() => todos.value.filter((t) => !t.done.value).length);
+
+  const addTodo = () => {
+    const text = draft.value.trim();
+    if (!text) return;
+    todos.value = [...todos.value, seed(text)];
+    draft.value = "";
+  };
+  const remove = (id) => {
+    todos.value = todos.value.filter((t) => t.id !== id);
+  };
+
+  // Lifecycle hooks bind to this instance (client-only semantics for
+  // mounted; updated observes the reactivity graph settling).
+  onMounted(() => console.log("[najm] TodoList mounted — island is interactive"));
+  onUpdated(() => console.log("[najm] TodoList updated —", remaining.peek(), "remaining"));
+  onDestroyed(() => console.log("[najm] TodoList destroyed — all effects disposed"));
+
+  return {
+    template: `
+      <section class="todos">
+        <h2>Todos <span class="badge">{remaining} left</span></h2>
+
+        <form (submit)={$event.preventDefault(); addTodo()}>
+          <input bind:value={draft} placeholder="What needs doing?" />
+          <button type="submit">Add</button>
+        </form>
+
+        <ul>
+          {#each todos as todo}
+            <li class={todo.done.value ? "done" : ""}>
+              <label>
+                <input type="checkbox" bind:checked={todo.done} />
+                <span>{todo.text}</span>
+              </label>
+              <button class="remove" (click)={remove(todo.id)}>✕</button>
+            </li>
+          {/each}
+        </ul>
+      </section>
+    `,
+
+    style: `
+      .todos {
+        max-width: 28rem;
+        margin: 2rem 0;
+        padding: 1.25rem 1.5rem;
+        border: 1px solid #e2e2e2;
+        border-radius: 12px;
+        background: #fff;
+      }
+      .todos h2 { display: flex; align-items: baseline; gap: 0.6rem; margin: 0 0 1rem; font-size: 1.2rem; }
+      .todos .badge {
+        font-size: 0.75rem; font-weight: 600; color: #6d28d9;
+        background: #ede9fe; padding: 0.15rem 0.55rem; border-radius: 999px;
+      }
+      .todos form { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+      .todos input:not([type]) {
+        flex: 1; padding: 0.45rem 0.7rem; border: 1px solid #d4d4d4;
+        border-radius: 8px; font: inherit;
+      }
+      .todos button {
+        border: none; border-radius: 8px; padding: 0.45rem 0.9rem;
+        background: #6d28d9; color: #fff; font: inherit; cursor: pointer;
+      }
+      .todos ul { list-style: none; margin: 0; padding: 0; }
+      .todos li {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 0.5rem; padding: 0.4rem 0.2rem; border-bottom: 1px solid #f0f0f0;
+      }
+      .todos li label { display: flex; align-items: center; gap: 0.55rem; cursor: pointer; }
+      .todos li.done span { text-decoration: line-through; color: #9ca3af; }
+      .todos li .remove { background: transparent; color: #9ca3af; padding: 0.1rem 0.4rem; }
+      .todos li .remove:hover { color: #dc2626; }
+    `,
+  };
+}

@@ -1,0 +1,60 @@
+{
+  "name": "najm-lang",
+  "displayName": "Najm Language Support",
+  "description": "Syntax highlighting, language configuration, and file icons for Najm (.najm) components.",
+  "version": "0.2.0",
+  "publisher": "najm-framework",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages"],
+  "main": "./dist/extension.js",
+  "activationEvents": ["onLanguage:najm"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "najm",
+        "aliases": ["Najm", "najm"],
+        "extensions": [".najm"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/najm-file.svg",
+          "dark": "./icons/najm-file.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "najm",
+        "scopeName": "source.najm",
+        "path": "./syntaxes/najm.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.najm-template": "html",
+          "meta.embedded.block.najm-style": "css",
+          "meta.embedded.expression.najm": "typescript"
+        }
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "najm-icons",
+        "label": "Najm File Icons",
+        "path": "./icons/najm-icon-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "package": "npm run build && vsce package",
+    "install-local": "code --install-extension najm-lang-0.2.0.vsix"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.7.2"
+  }
+}

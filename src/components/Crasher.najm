@@ -1,0 +1,19 @@
+/**
+ * RFC-0006 error-boundary demo component. Deliberately throws during
+ * ssr() when handed a bad prop, so src/pages/error-boundary-demo.najm
+ * can prove withErrorBoundary() splices in fallback HTML instead of
+ * 500ing the whole page. See runtime/error-boundary.ts.
+ */
+export default function Crasher(props = {}) {
+  if (props.bad) {
+    throw new Error(`Crasher: refusing to render with bad=${JSON.stringify(props.bad)}`);
+  }
+
+  return {
+    template: `
+      <div class="crasher-ok">
+        <p>Crasher rendered fine — bad was falsy.</p>
+      </div>
+    `,
+  };
+}

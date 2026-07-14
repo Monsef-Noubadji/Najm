@@ -1,0 +1,17 @@
+<script>
+  const facts = [
+    "This page has no islands.",
+    "It should ship zero bytes of Najm JavaScript.",
+  ];
+</script>
+
+<template>
+  <main>
+    <h1>Zero-island benchmark fixture</h1>
+    <ul>
+      {#each facts as fact}
+        <li>{fact}</li>
+      {/each}
+    </ul>
+  </main>
+</template>

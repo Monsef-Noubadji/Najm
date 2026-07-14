@@ -1,0 +1,42 @@
+import { signal, computed } from "najm/core";
+
+/**
+ * Benchmark island fixture — RFC-0014.
+ *
+ * Deliberately non-trivial (similar complexity class to src/components/
+ * TodoList.najm, not a toy): two signals, a computed, an each-block, one
+ * event handler. Used by BOTH benchmark properties:
+ *
+ *   - bundle-size (benchmarks/bundle-size.ts): the "one non-trivial
+ *     island" page's chunk size + external-runtime-import check.
+ *   - hydration-cost (benchmarks/hydration-cost.ts): a fixed M (dynamic
+ *     bindings) — count/label text, the each-block's per-row text, and
+ *     the bind:value input — embedded in pages with different amounts of
+ *     surrounding static content (N), per the RFC's exact design.
+ */
+export default function Widget(props = {}) {
+  const count = signal(props.initial ?? 0);
+  const label = signal("benchmark");
+  const doubled = computed(() => count.value * 2);
+  const items = ["alpha", "beta", "gamma"];
+
+  const increment = () => count.value++;
+
+  return {
+    template: `
+      <div class="widget">
+        <p>{label}: {count} (doubled: {doubled})</p>
+        <button (click)={increment()}>+1</button>
+        <input bind:value={label} />
+        <ul>
+          {#each items as item}
+            <li>{item}</li>
+          {/each}
+        </ul>
+      </div>
+    `,
+    style: `
+      .widget { padding: 0.75rem 1rem; border: 1px solid #ddd; border-radius: 8px; }
+    `,
+  };
+}

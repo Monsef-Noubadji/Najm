@@ -1,0 +1,90 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Najm",
+  "scopeName": "source.najm",
+  "comment": "Beta .najm files ARE TypeScript modules; the grammar's job is to recognize the two backtick DSL regions (template/style) inside the returned view object and light up Najm's template syntax within them.",
+  "patterns": [
+    { "include": "#najm-template" },
+    { "include": "#najm-style" },
+    { "include": "source.ts" }
+  ],
+  "repository": {
+    "najm-template": {
+      "comment": "template: ` ... ` — HTML-ish content with Najm bindings",
+      "begin": "\\b(template)\\s*(:)\\s*(`)",
+      "beginCaptures": {
+        "1": { "name": "variable.other.property.najm" },
+        "2": { "name": "punctuation.separator.key-value.najm" },
+        "3": { "name": "punctuation.definition.string.template.begin.najm" }
+      },
+      "end": "`",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.template.end.najm" }
+      },
+      "contentName": "meta.embedded.block.najm-template",
+      "patterns": [
+        {
+          "comment": "{#each list as item, i} … {/each}",
+          "match": "(\\{#each)\\s+(.+?)\\s+(as)\\s+([A-Za-z_$][\\w$]*)(?:\\s*,\\s*([A-Za-z_$][\\w$]*))?\\s*(\\})",
+          "captures": {
+            "1": { "name": "keyword.control.each.najm" },
+            "2": { "name": "meta.embedded.expression.najm" },
+            "3": { "name": "keyword.control.as.najm" },
+            "4": { "name": "variable.parameter.najm" },
+            "5": { "name": "variable.parameter.najm" },
+            "6": { "name": "keyword.control.each.najm" }
+          }
+        },
+        {
+          "match": "\\{/each\\}",
+          "name": "keyword.control.each.end.najm"
+        },
+        {
+          "comment": "(click)={statement} — Angular-style event binding",
+          "match": "(\\([A-Za-z][\\w-]*\\))(?==\\{)",
+          "name": "entity.other.attribute-name.event.najm"
+        },
+        {
+          "comment": "on:click={handler} — reference-style event binding",
+          "match": "\\b(on:[A-Za-z][\\w-]*)(?==\\{)",
+          "name": "entity.other.attribute-name.event.najm"
+        },
+        {
+          "comment": "bind:value / bind:checked — two-way bindings",
+          "match": "\\b(bind:[a-z]+)(?==\\{)",
+          "name": "entity.other.attribute-name.binding.najm support.type.najm"
+        },
+        {
+          "comment": "client:load — island directive",
+          "match": "\\bclient:(load|visible|idle)\\b",
+          "name": "keyword.other.island-directive.najm"
+        },
+        {
+          "comment": "{expression} interpolation — highlighted as TypeScript",
+          "begin": "\\{",
+          "beginCaptures": { "0": { "name": "punctuation.section.interpolation.begin.najm" } },
+          "end": "\\}",
+          "endCaptures": { "0": { "name": "punctuation.section.interpolation.end.najm" } },
+          "contentName": "meta.embedded.expression.najm",
+          "patterns": [{ "include": "source.ts" }]
+        },
+        { "include": "text.html.basic" }
+      ]
+    },
+    "najm-style": {
+      "comment": "style: ` ... ` — component CSS",
+      "begin": "\\b(style)\\s*(:)\\s*(`)",
+      "beginCaptures": {
+        "1": { "name": "variable.other.property.najm" },
+        "2": { "name": "punctuation.separator.key-value.najm" },
+        "3": { "name": "punctuation.definition.string.template.begin.najm" }
+      },
+      "end": "`",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.template.end.najm" }
+      },
+      "contentName": "meta.embedded.block.najm-style",
+      "patterns": [{ "include": "source.css" }]
+    }
+  }
+}

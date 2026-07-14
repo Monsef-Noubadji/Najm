@@ -1,0 +1,5 @@
+export default function AdminHome(props = {}) {
+  return {
+    template: `<main><h1>Admin</h1><p>You passed the middleware check.</p></main>`,
+  };
+}

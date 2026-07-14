@@ -1,0 +1,18 @@
+import Widget from "../components/Widget.najm";
+
+/**
+ * Hydration-cost fixture — LOW N. Same island, same M (dynamic bindings)
+ * as hydration-high-n.najm, minimal surrounding static content. See
+ * benchmarks/hydration-cost.ts: hydration wall-clock time is asserted to
+ * NOT scale with N (RFC-0003/0007's static-hoisting claim).
+ */
+export default function HydrationLowN(props = {}) {
+  return {
+    template: `
+      <main>
+        <h1>Hydration fixture — low N</h1>
+        <Widget client:load initial={0} />
+      </main>
+    `,
+  };
+}

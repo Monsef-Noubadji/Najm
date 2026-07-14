@@ -1,0 +1,26 @@
+import Widget from "../components/Widget.najm";
+
+/**
+ * Hydration-cost fixture — HIGH N. Same island, same M (dynamic
+ * bindings) as hydration-low-n.najm, but surrounded by a large amount of
+ * hoisted, non-reactive static content (a plain array, not a signal). See
+ * benchmarks/hydration-cost.ts: hydration wall-clock time is asserted to
+ * NOT scale with N (RFC-0003/0007's static-hoisting claim).
+ */
+export default function HydrationHighN(props = {}) {
+  const filler = Array.from({ length: 500 }, (_, i) => i);
+
+  return {
+    template: `
+      <main>
+        <h1>Hydration fixture — high N</h1>
+        <Widget client:load initial={0} />
+        <ul class="filler">
+          {#each filler as n}
+            <li>static row {n} — this content is hoisted, not reactive</li>
+          {/each}
+        </ul>
+      </main>
+    `,
+  };
+}

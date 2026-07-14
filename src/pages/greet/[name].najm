@@ -1,0 +1,18 @@
+<script>
+  // Dynamic route: src/pages/greet/[name].najm → /greet/:name
+  // The router injects matched segments as props.params.
+  const name = props.params.name;
+</script>
+
+<template>
+  <main>
+    <h1>Hello, {name}!</h1>
+    <p>Matched by <code>src/pages/greet/[name].najm</code>, rendered entirely on the server.</p>
+    <p><a href="/">← home</a></p>
+  </main>
+</template>
+
+<style>
+  main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem; font-family: system-ui, sans-serif; }
+  code { background: #ede9fe; padding: 0.1rem 0.35rem; border-radius: 4px; }
+</style>

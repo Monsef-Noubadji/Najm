@@ -1,0 +1,26 @@
+{
+  "name": "najm-router",
+  "version": "0.3.0-dev",
+  "description": "Najm's file-based router: page resolution, dynamic/catch-all params, nested layouts, and middleware (RFC-0008).",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "engines": { "node": ">=20" },
+  "files": ["dist", "README.md"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0"
+  },
+  "keywords": ["router", "file-based-routing", "middleware", "najm"]
+}
