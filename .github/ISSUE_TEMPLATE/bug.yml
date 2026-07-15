@@ -1,0 +1,28 @@
+name: Bug report
+description: Report reproducible Najm behavior. Report security vulnerabilities privately.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not disclose security issues here; use private vulnerability reporting."
+  - type: input
+    id: version
+    attributes: { label: Najm version }
+    validations: { required: true }
+  - type: textarea
+    id: environment
+    attributes: { label: Environment, description: "Node, OS, browser, and Vite versions." }
+    validations: { required: true }
+  - type: textarea
+    id: reproduction
+    attributes: { label: Minimal reproduction, description: "Link a minimal repository or provide exact steps." }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected behavior }
+    validations: { required: true }
+  - type: textarea
+    id: actual
+    attributes: { label: Actual behavior }
+    validations: { required: true }

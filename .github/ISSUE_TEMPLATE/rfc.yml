@@ -1,0 +1,19 @@
+name: RFC proposal
+description: Propose an architectural decision. Report security vulnerabilities privately.
+title: "[RFC]: "
+labels: [rfc]
+body:
+  - type: markdown
+    attributes: { value: "Do not disclose security issues here; use private vulnerability reporting." }
+  - type: textarea
+    id: motivation
+    attributes: { label: Motivation and use cases }
+    validations: { required: true }
+  - type: textarea
+    id: design
+    attributes: { label: Proposed design }
+    validations: { required: true }
+  - type: textarea
+    id: impact
+    attributes: { label: Alternatives and impact, description: "Address compatibility, performance, security, and documentation." }
+    validations: { required: true }
