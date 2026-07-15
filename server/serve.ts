@@ -26,12 +26,11 @@
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { runMiddlewareChain } from '../router/middleware';
 import type { MiddlewareModule } from '../router/middleware';
 import type { IslandRef } from '../runtime/ssr';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = process.cwd();
 const distDir = path.join(root, 'dist');
 const port = Number(process.env.PORT ?? 4000);
 

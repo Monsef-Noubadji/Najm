@@ -17,23 +17,25 @@
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createServer as createViteServer } from 'vite';
+import { createServer as createViteServer, loadConfigFromFile } from 'vite';
 import { najm } from '../compiler/plugin';
 import { resolvePage } from '../router/router';
 import { runMiddlewareChain } from '../router/middleware';
 import type { MiddlewareModule } from '../router/middleware';
 import type { IslandRef } from '../runtime/ssr';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = process.cwd();
 const pagesDir = path.join(root, 'src', 'pages');
 const port = Number(process.env.PORT ?? 3000);
 
-const runtimeIndex = path.join(root, 'runtime', 'index.ts');
+const runtimeIndex = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
+const loadedConfig = await loadConfigFromFile({ command: 'serve', mode: 'development' }, undefined, root);
+const hasConfiguredNajm = loadedConfig?.config.plugins?.some((plugin: any) => plugin?.name === 'vite-plugin-najm') ?? false;
 
 const vite = await createViteServer({
   root,
   appType: 'custom',
-  plugins: [najm()],
+  plugins: hasConfiguredNajm ? [] : [najm()],
   resolve: {
     // Local aliases standing in for the published packages (see
     // packages/ for the npm distribution blueprints):
@@ -53,7 +55,8 @@ const vite = await createViteServer({
 // compiled pages import. Pages live in Vite's SSR module graph, so we
 // fetch the runtime through that same graph — importing it directly
 // into this process would give us a second, disconnected copy.
-const runtime: any = await vite.ssrLoadModule('/runtime/index.ts');
+const runtimeUrl = '/' + path.relative(root, runtimeIndex).split(path.sep).join('/');
+const runtime: any = await vite.ssrLoadModule(runtimeUrl);
 
 http
   .createServer((req, res) => {
@@ -158,7 +161,7 @@ function shell(body: string, islands: IslandRef[], styles: Set<string>): string 
   const srcs = [...new Set(islands.map((i) => i.src))];
   const islandsScript = srcs.length
     ? `<script type="module">
-import { hydrateIslands } from "/runtime/index.ts";
+import { hydrateIslands } from ${JSON.stringify(runtimeUrl)};
 hydrateIslands({
 ${srcs
   .map((s) => `  ${JSON.stringify(s)}: () => import(${JSON.stringify(s + '?import')}),`)

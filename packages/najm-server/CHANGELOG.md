@@ -1,5 +1,11 @@
 # @monsef-nbj/najm-server
 
+## 1.0.0-rc.1
+
+### Patch Changes
+
+- Resolve adopter application roots from the working directory and load the runtime through the published `@monsef-nbj/najm/core` export. Published development and production commands now work outside the Najm repository.
+
 ## 1.0.0-rc.0
 
 ### Major Changes

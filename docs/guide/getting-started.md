@@ -42,8 +42,10 @@ import { signal } from '@monsef-nbj/najm/core';
 const count = signal(0);
 </script>
 
-<h1>Najm is rendering HTML</h1>
-<button (click)={count.value++}>Count: {count}</button>
+<template>
+  <h1>Najm is rendering HTML</h1>
+  <button (click)={count.value++}>Count: {count}</button>
+</template>
 ```
 
 The heading is server HTML. The event makes this component interactive, so the compiler emits the claim and binding code required to hydrate it.

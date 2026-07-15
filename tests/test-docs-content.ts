@@ -17,4 +17,5 @@ for (const file of files) {
 const start = readFileSync('docs/guide/getting-started.md', 'utf8');
 assert.match(start, /npm install @monsef-nbj\/najm@next/);
 assert.match(start, /@monsef-nbj\/najm\/core/);
+assert.match(start, /<template>[\s\S]*Najm is rendering HTML[\s\S]*<\/template>/);
 console.log('docs content: all assertions passed');

@@ -28,8 +28,8 @@ assert.ok(
   'Changesets prerelease mode must publish without a custom tag',
 );
 assert.ok(
-  releaseScript.includes("['dist-tag', 'add'") && releaseScript.includes("'next'"),
-  'RC publication must add the approved npm next dist-tag after publishing',
+  releaseScript.includes("pre.tag = 'next'") && releaseScript.includes('writeFileSync(prePath, originalPre'),
+  'RC publication must atomically publish under next and restore prerelease metadata',
 );
 
 console.log('release channel: all assertions passed');
