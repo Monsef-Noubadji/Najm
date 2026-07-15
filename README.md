@@ -4,7 +4,7 @@
 
 [Engineering documentation](https://monsef-noubadji.github.io/Najm/) | [Getting started](https://monsef-noubadji.github.io/Najm/guide/introduction) | [API reference](https://monsef-noubadji.github.io/Najm/reference/runtime) | [Contributing](https://monsef-noubadji.github.io/Najm/contributing/)
 
-> Najm is currently `0.3.0-beta`. Review the [beta adoption policy](https://monsef-noubadji.github.io/Najm/guide/beta-status) before production use.
+> Najm `1.0.0-rc.0` is API-frozen for release-candidate validation. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) before production use.
 
 ## Why Najm
 
@@ -19,7 +19,7 @@
 Node.js 20 or newer is required.
 
 ```bash
-npm install @monsef-nbj/najm@beta @monsef-nbj/najm-compiler@beta @monsef-nbj/najm-router@beta @monsef-nbj/najm-server@beta
+npm install @monsef-nbj/najm@next @monsef-nbj/najm-compiler@next @monsef-nbj/najm-router@next @monsef-nbj/najm-server@next
 ```
 
 ```ts
@@ -28,7 +28,7 @@ import { signal } from '@monsef-nbj/najm/core';
 const count = signal(0);
 ```
 
-The standalone CLI is not published in this beta. Follow the [Vite setup](https://monsef-noubadji.github.io/Najm/guide/getting-started) for application integration.
+The standalone CLI remains deferred and repository-only. Follow the [Vite setup](https://monsef-noubadji.github.io/Najm/guide/getting-started) for application integration.
 
 ## Repository development
 

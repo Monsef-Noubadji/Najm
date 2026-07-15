@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 const files = [
   'docs/guide/introduction.md', 'docs/guide/getting-started.md',
   'docs/guide/project-structure.md', 'docs/guide/production.md',
-  'docs/guide/beta-status.md', 'docs/guide/components.md',
+  'docs/guide/release-status.md', 'docs/guide/components.md',
   'docs/guide/routing-and-ssr.md', 'docs/learn/islands-and-hydration.md',
   'docs/learn/store-and-context.md', 'docs/learn/error-boundaries.md',
 ];
@@ -15,6 +15,6 @@ for (const file of files) {
   assert.doesNotMatch(content, /0\.3\.0-dev|not yet published|git clone <this-repo>|from ['"]najm\/core['"]/i, `${file} contains stale guidance`);
 }
 const start = readFileSync('docs/guide/getting-started.md', 'utf8');
-assert.match(start, /npm install @monsef-nbj\/najm@beta/);
+assert.match(start, /npm install @monsef-nbj\/najm@next/);
 assert.match(start, /@monsef-nbj\/najm\/core/);
 console.log('docs content: all assertions passed');

@@ -9,7 +9,14 @@ Najm publishes four scoped packages on one version line: `@monsef-nbj/najm`,
 `@monsef-nbj/najm-compiler`, `@monsef-nbj/najm-router`, and
 `@monsef-nbj/najm-server`. npm workspaces provide the distribution
 boundary, Changesets versions the four packages as a fixed group, and GitHub
-Actions publishes beta releases with npm provenance.
+Actions publishes releases with npm provenance.
+
+**Revision note (1.0 release hardening).** The first stable release uses an
+evidence-based `1.0.0-rc.0` gate rather than an undefined elapsed beta cycle.
+RC artifacts publish under `next`; stable artifacts publish under `latest`
+only after repository, API-contract, package-consumer, benchmark,
+documentation, registry, and Tier 1 regression checks pass. Any behavioral
+change after a verified RC requires another RC. The CLI remains deferred.
 
 The packages build from the repository's existing root source directories.
 Package-local tsup configurations bundle Najm-owned relative imports into each
@@ -75,10 +82,10 @@ Tier 2 change -> coordinated minor bump
 Tier 3 change -> no public versioning effect
 ```
 
-All four packages entered the registry at `0.3.0-beta.0` under the `beta`
-dist-tag. Stable `1.0.0` requires one complete
-beta cycle with no Tier 1 changes and a non-regressing RFC-0014 benchmark
-history.
+All four packages entered the registry at `0.3.0-beta.0`. Stable `1.0.0`
+requires a verified `1.0.0-rc.0` with no Tier 1 regressions, a non-regressing
+RFC-0014 benchmark, passing clean-consumer package tests, and complete local
+and CI release gates.
 
 ## Release pipeline
 

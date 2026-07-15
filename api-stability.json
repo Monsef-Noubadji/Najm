@@ -1,0 +1,25 @@
+{
+  "packages": {
+    "@monsef-nbj/najm": [".", "./core", "./package.json"],
+    "@monsef-nbj/najm-compiler": [".", "./vite", "./plugin-api", "./package.json"],
+    "@monsef-nbj/najm-router": [".", "./middleware", "./package.json"],
+    "@monsef-nbj/najm-server": ["./dev", "./build", "./serve", "./package.json"]
+  },
+  "runtime": {
+    "tier1": [
+      "Signal", "signal", "computed", "effect", "batch", "untrack", "onCleanup", "isSignal", "get",
+      "ReadonlySignal", "Cleanup", "defineStore", "Store", "StoreDefinition", "Mutator", "Getter",
+      "createContext", "provide", "inject", "Context", "ComponentInstance", "currentInstance", "runWithInstance",
+      "onMounted", "onUpdated", "onDestroyed", "instantiate", "mountComponent", "ComponentView",
+      "FunctionalComponent", "MountedComponent", "toDisplay", "escapeHtml", "escapeAttr", "bindText", "bindAttr",
+      "setAttr", "bindValue", "bindChecked", "listen", "claim", "eachBlock", "hoistTemplate", "ClaimCursor",
+      "beginRender", "endRender", "registerStyle", "attr", "renderToHtml", "renderComponent", "renderIsland"
+    ],
+    "tier2": [
+      "createRoot", "withEffectObserver", "currentOwner", "OwnerHandle", "enableTimeTravel", "HistoryEntry",
+      "TimeTravelController", "enableGraphInspector", "snapshot", "GraphSnapshot", "enableFlushTiming", "FlushEvent",
+      "IslandRef", "RenderContext", "hydrateIslands", "withErrorBoundary", "OnError", "ErrorPhase"
+    ]
+  },
+  "internalOnly": ["__setFactories", "__addDrainHook", "_devtoolsInspect", "_devtoolsSubs"]
+}
