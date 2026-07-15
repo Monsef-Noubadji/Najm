@@ -54,6 +54,63 @@ function runCli(args: string[], opts: { timeout?: number } = {}): { stdout: stri
 }
 
 /* ------------------------------------------------------------------ */
+/* Published CLI contract                                              */
+/* ------------------------------------------------------------------ */
+
+await test('najm --help exits 0 and lists create, doctor, lint, preview, and deferred test', () => {
+  const { stdout, status } = runCli(['--help']);
+  assert.equal(status, 0);
+  assert.match(stdout, /najm create <dir>/);
+  assert.match(stdout, /najm doctor/);
+  assert.match(stdout, /najm lint/);
+  assert.match(stdout, /najm preview/);
+  assert.match(stdout, /najm test/);
+});
+
+await test('najm --version prints the runtime package version', () => {
+  const { stdout, status } = runCli(['--version']);
+  assert.equal(status, 0);
+  assert.match(stdout.trim(), /^1\.1\.0-rc\.0$/);
+});
+
+await test('najm test is explicitly deferred', () => {
+  const { stdout, stderr, status } = runCli(['test']);
+  assert.notEqual(status, 0);
+  assert.match(`${stdout}\n${stderr}`, /najm test is deferred for this release/);
+});
+
+await test('najm create <dir> scaffolds through the primary alias', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'najm-create-primary-test-'));
+  const target = path.join(tmp, 'primary-app');
+  try {
+    const { status, stdout, stderr } = runCli(['create', target], { timeout: 120_000 });
+    assert.equal(status, 0, `stdout:\n${stdout}\nstderr:\n${stderr}`);
+    assert.ok(fs.existsSync(path.join(target, 'package.json')));
+    assert.ok(fs.existsSync(path.join(target, 'pnpm-lock.yaml')), 'create should run pnpm install');
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+await test('invalid --port values fail before spawning servers', () => {
+  for (const value of ['0', '65536', 'abc', '3.14']) {
+    const { stdout, stderr, status } = runCli(['dev', '--port', value]);
+    assert.notEqual(status, 0);
+    assert.match(`${stdout}\n${stderr}`, /--port must be an integer between 1 and 65535/);
+  }
+});
+
+await test('unknown flags and unexpected extra args fail with usage', () => {
+  const unknownFlag = runCli(['doctor', '--json']);
+  assert.notEqual(unknownFlag.status, 0);
+  assert.match(`${unknownFlag.stdout}\n${unknownFlag.stderr}`, /unknown option "--json"/);
+
+  const extraArg = runCli(['build', 'extra']);
+  assert.notEqual(extraArg.status, 0);
+  assert.match(`${extraArg.stdout}\n${extraArg.stderr}`, /unexpected argument "extra"/);
+});
+
+/* ------------------------------------------------------------------ */
 /* najm doctor                                                         */
 /* ------------------------------------------------------------------ */
 
