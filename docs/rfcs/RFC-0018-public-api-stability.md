@@ -40,6 +40,18 @@ record, and its own migration note is exactly RFC-0016's Verification
 section: every call site becomes `await beginRender(async () => { ...
 the old body between beginRender()/endRender() ... })`.
 
+**Revision note (1.0 release hardening).** The previously open automated-gate
+action is now implemented by `api-stability.json` and
+`tests/test-api-stability.ts`. The manifest classifies every export from the
+public runtime barrel and every package export path; CI rejects removals,
+unclassified additions, duplicate tier assignments, and internal-symbol
+leaks. Supporting types inherit the tier of their owning API. The already
+public advanced instance helpers (`ComponentInstance`, `currentInstance`, and
+`runWithInstance`) are Tier 1 because lifecycle and mounting integrations
+depend on their component-instance contract. Changing the manifest requires
+explicit stability-tier and SemVer review rather than an incidental barrel
+edit.
+
 ## Summary
 
 Classifies `runtime/index.ts`'s current export surface (accumulated
@@ -204,14 +216,11 @@ surface (see Verification).
   its export statements (only in the source files that define them,
   imported and used internally by `devtools-graph.ts`/`devtools-timing.ts`,
   never re-exported). **Done** (verified by direct inspection).
-- **Action item, not yet implemented**: an automated gate (candidate:
-  extend `tests/test-runtime-boundary.ts` again, or a new
-  `tests/test-api-stability.ts`) asserting `runtime/index.ts`'s actual
-  export list is a subset of {Tier 1 ∪ Tier 2} — i.e., nothing new gets
-  added to the public surface without a conscious decision about which
-  tier it belongs in, the same enforcement pattern RFC-0015's
-  suite-registration gate and RFC-0002's boundary gate already
-  established for their respective concerns.
+- Automated gate: `tests/test-api-stability.ts` asserts that
+  `runtime/index.ts` exactly matches the Tier 1 and Tier 2 symbols in
+  `api-stability.json`, that internal-only names do not leak, and that all
+  four package export maps match their classified paths. **Done** for the
+  1.0 release hardening cycle.
 
 ## Open questions
 
