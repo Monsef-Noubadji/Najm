@@ -34,7 +34,7 @@
  * instance discipline dev.ts documents (fetch runtime through the Vite
  * SSR module graph, not a second disconnected import).
  */
-import fs from 'node:fs';
+import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build as viteBuild, createServer as createViteServer, loadConfigFromFile } from 'vite';
@@ -51,7 +51,9 @@ import type { IslandRef } from '../runtime/ssr';
 const root = process.env.NAJM_APP_ROOT ? path.resolve(process.env.NAJM_APP_ROOT) : process.cwd();
 const pagesDir = path.join(root, 'src', 'pages');
 const distDir = path.join(root, 'dist');
-const runtimeIndex = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
+const publishedRuntime = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
+const sourceRuntime = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'runtime', 'index.ts');
+const runtimeIndex = existsSync(publishedRuntime) ? publishedRuntime : sourceRuntime;
 
 const aliases = [
   { find: '@monsef-nbj/najm/core', replacement: runtimeIndex },
