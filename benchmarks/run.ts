@@ -92,6 +92,10 @@ function evaluateChecks(checks: Check[]): { regressed: string[]; lines: string[]
 async function main(): Promise<number> {
   const updateBaseline = process.argv.includes('--update-baseline');
 
+  // Measure sub-millisecond latency before fixture builds or Playwright;
+  // both leave enough process activity to contaminate this timing.
+  const signalLatency: SignalLatencyResults = runSignalLatency();
+
   console.log('\n▲ najm bench — running all three RFC-0014 measured properties\n');
 
   console.log('[1/3] bundle size (pure Node, gating — see tests/test-bundle-size.ts)');
@@ -99,11 +103,10 @@ async function main(): Promise<number> {
   console.log(`    zero-island <script> tags: ${bundleSize.zeroIslandScriptTags} (hard gate: must be 0)`);
   console.log(`    island imports runtime externally: ${bundleSize.islandImportsRuntimeExternally} (hard gate: must be true)`);
 
-  console.log('\n[2/3] hydration cost (Playwright, reported not gating)');
-  const hydrationCost: HydrationCostResult = await runHydrationCost();
+  console.log('\n[2/3] signal update latency (pure Node, reported not gating)');
 
-  console.log('\n[3/3] signal update latency (pure Node, reported not gating)');
-  const signalLatency: SignalLatencyResults = runSignalLatency();
+  console.log('\n[3/3] hydration cost (Playwright, reported not gating)');
+  const hydrationCost: HydrationCostResult = await runHydrationCost();
 
   const baseline = readBaseline();
 
