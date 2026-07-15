@@ -32,8 +32,10 @@ jobs:
 
       # Gate: nothing publishes unless the whole surface is green.
       - run: npm test
-      - run: npm run typecheck
       - run: npm run build:packages
+      # The sample app imports workspace packages through their public export
+      # maps, so declarations must exist before a clean-checkout typecheck.
+      - run: npm run typecheck
       - run: npm run test:packages
       - run: npm run bench
       - run: npm run docs:check
