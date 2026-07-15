@@ -9,6 +9,7 @@ assert.throws(() => releaseTag('1.0.0-beta.1'), /unsupported prerelease/);
 assert.throws(() => releaseTag('not-semver'), /invalid version/);
 
 const workflow = fs.readFileSync('.github/workflows/release.yml', 'utf8');
+const releaseScript = fs.readFileSync('scripts/release-tag.ts', 'utf8');
 for (const command of ['npm run test:packages', 'npm run bench', 'npm run docs:check', 'npm run release:ci']) {
   assert.ok(workflow.includes(command), `release workflow must run ${command}`);
 }
@@ -22,5 +23,13 @@ assert.ok(
   'clean CI must install Chromium before browser benchmarks',
 );
 assert.ok(!workflow.includes('--tag beta'), 'release workflow must not hard-code beta');
+assert.ok(
+  !releaseScript.includes("['run', 'release', '--', '--tag', 'next']"),
+  'Changesets prerelease mode must publish without a custom tag',
+);
+assert.ok(
+  releaseScript.includes("['dist-tag', 'add'") && releaseScript.includes("'next'"),
+  'RC publication must add the approved npm next dist-tag after publishing',
+);
 
 console.log('release channel: all assertions passed');
