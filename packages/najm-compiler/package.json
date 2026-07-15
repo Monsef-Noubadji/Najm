@@ -1,6 +1,6 @@
 {
   "name": "@monsef-nbj/najm-compiler",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "The Najm compiler: .najm functional components → SSR string builders + hydration claim-walks. Includes the Vite plugin.",
   "repository": {
     "type": "git",

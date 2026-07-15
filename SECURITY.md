@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Security fixes target the current `1.0.0-rc.1` release candidate. Older prereleases may receive no fixes; upgrade to the latest `next` release before reporting a version-specific issue.
+Security fixes target the current stable `1.x` line. Upgrade to the latest stable release before reporting a version-specific issue.
 
 ## Reporting
 

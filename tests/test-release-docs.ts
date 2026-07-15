@@ -8,10 +8,10 @@ const activeFiles = [
   'docs/contributing/1.0-release.md', 'docs/.vitepress/config.mts',
 ];
 const active = activeFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
-assert.match(active, /1\.0\.0-rc\.1/);
-assert.match(active, /@next/);
+assert.match(active, /1\.0\.0/);
+assert.doesNotMatch(active, /@next|1\.0\.0-rc\./);
 assert.match(active, /CLI[\s\S]{0,120}(deferred|repository-only)/i);
 assert.match(active, /\/guide\/release-status/);
 assert.doesNotMatch(active, /@beta|0\.3\.0-beta|beta software/i);
 
-console.log('release docs: RC guidance and CLI deferral verified');
+console.log('release docs: stable guidance and CLI deferral verified');

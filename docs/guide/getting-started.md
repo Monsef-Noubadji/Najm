@@ -7,7 +7,7 @@ Use Node.js 20 or newer and npm. The CLI remains deferred and repository-only, s
 ## Install
 
 ```bash
-npm install @monsef-nbj/najm@next @monsef-nbj/najm-compiler@next @monsef-nbj/najm-router@next @monsef-nbj/najm-server@next
+npm install @monsef-nbj/najm @monsef-nbj/najm-compiler @monsef-nbj/najm-router @monsef-nbj/najm-server
 npm install --save-dev vite@^6 typescript@^5.7
 ```
 

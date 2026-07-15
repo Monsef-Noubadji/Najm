@@ -1,6 +1,6 @@
 {
   "name": "@monsef-nbj/najm-server",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "Najm's executable SSR development, production build, and preview server entry modules.",
   "repository": {
     "type": "git",
