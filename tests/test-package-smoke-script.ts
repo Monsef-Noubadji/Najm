@@ -6,6 +6,7 @@ assert.equal(pkg.scripts['test:packages'], 'tsx scripts/test-packages.ts');
 
 const source = fs.readFileSync('scripts/test-packages.ts', 'utf8');
 const serveSource = fs.readFileSync('server/serve.ts', 'utf8');
+const buildSource = fs.readFileSync('server/build.ts', 'utf8');
 for (const required of ["['pack'", "['install'", '.tmp/package-smoke', 'finally', 'import.meta.resolve']) {
   assert.ok(source.includes(required), `package smoke script must include ${required}`);
 }
@@ -16,5 +17,6 @@ for (const required of ["'src', 'pages'", "['run', 'build']", 'vite.config.ts', 
   assert.ok(source.includes(required), `package smoke script must execute an adopter build and include ${required}`);
 }
 assert.match(serveSource, /const root = process\.cwd\(\)/, 'published preview must serve the adopter working directory');
+assert.match(buildSource, /existsSync\(publishedRuntime\)/, 'source builds must tolerate workspace packages before dist exists');
 
 console.log('package smoke contract: all assertions passed');

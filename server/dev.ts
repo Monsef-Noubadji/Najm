@@ -15,6 +15,7 @@
  * runtime", zero.
  */
 import http from 'node:http';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer as createViteServer, loadConfigFromFile } from 'vite';
@@ -28,7 +29,9 @@ const root = process.cwd();
 const pagesDir = path.join(root, 'src', 'pages');
 const port = Number(process.env.PORT ?? 3000);
 
-const runtimeIndex = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
+const publishedRuntime = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
+const sourceRuntime = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'runtime', 'index.ts');
+const runtimeIndex = existsSync(publishedRuntime) ? publishedRuntime : sourceRuntime;
 const loadedConfig = await loadConfigFromFile({ command: 'serve', mode: 'development' }, undefined, root);
 const hasConfiguredNajm = loadedConfig?.config.plugins?.some((plugin: any) => plugin?.name === 'vite-plugin-najm') ?? false;
 
