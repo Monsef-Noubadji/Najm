@@ -13,8 +13,8 @@ const sourceRepoRoot = path.resolve(here, '..');
 
 function readVersion(): string {
   const candidates = [
-    path.resolve(here, '..', 'package.json'),
     path.resolve(here, '..', 'packages', 'najm', 'package.json'),
+    path.resolve(here, '..', 'package.json'),
   ];
 
   for (const candidate of candidates) {
@@ -24,6 +24,10 @@ function readVersion(): string {
   }
 
   return '0.0.0';
+}
+
+function scaffoldPackageVersion(): string {
+  return process.env.NAJM_CREATE_PACKAGE_VERSION || readVersion();
 }
 
 function usage(): void {
@@ -153,7 +157,7 @@ function cmdCreate(args: string[], flags: Record<string, string | true>, cwd: st
 
   try {
     const target = path.resolve(cwd, dir);
-    const result = scaffoldApp(target, { install: true, packageVersion: readVersion() });
+    const result = scaffoldApp(target, { install: true, packageVersion: scaffoldPackageVersion() });
     console.log(`\n  Najm project created in ${result.dir}\n`);
     return result.installOk ? 0 : 1;
   } catch (error) {
@@ -166,6 +170,16 @@ export async function main(argv: string[], opts: { cwd?: string } = {}): Promise
   const cwd = opts.cwd ?? process.cwd();
   const parsed = parseArgv(argv);
   const { command, args, flags } = parsed;
+
+  if (!command && (flags.help || flags.h)) {
+    usage();
+    return 0;
+  }
+
+  if (!command && flags.version) {
+    console.log(readVersion());
+    return 0;
+  }
 
   switch (command) {
     case 'dev':

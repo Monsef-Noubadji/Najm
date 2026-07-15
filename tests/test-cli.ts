@@ -44,11 +44,20 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const cliEntry = path.join(repoRoot, 'cli', 'najm.ts');
 const tsxCli = path.join(repoRoot, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 
-function runCli(args: string[], opts: { timeout?: number } = {}): { stdout: string; stderr: string; status: number } {
+function runCli(args: string[], opts: { timeout?: number; env?: NodeJS.ProcessEnv } = {}): { stdout: string; stderr: string; status: number } {
   const result = spawnSync(
     process.execPath,
     [tsxCli, cliEntry, ...args],
-    { cwd: repoRoot, encoding: 'utf8', timeout: opts.timeout ?? 60_000 }
+    { cwd: repoRoot, encoding: 'utf8', timeout: opts.timeout ?? 60_000, env: { ...process.env, ...opts.env } }
+  );
+  return { stdout: result.stdout ?? '', stderr: result.stderr ?? '', status: result.status ?? -1 };
+}
+
+function runCliIn(cwd: string, args: string[], opts: { timeout?: number } = {}): { stdout: string; stderr: string; status: number } {
+  const result = spawnSync(
+    process.execPath,
+    [tsxCli, cliEntry, ...args],
+    { cwd, encoding: 'utf8', timeout: opts.timeout ?? 60_000 }
   );
   return { stdout: result.stdout ?? '', stderr: result.stderr ?? '', status: result.status ?? -1 };
 }
@@ -83,7 +92,10 @@ await test('najm create <dir> scaffolds through the primary alias', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'najm-create-primary-test-'));
   const target = path.join(tmp, 'primary-app');
   try {
-    const { status, stdout, stderr } = runCli(['create', target], { timeout: 120_000 });
+    const { status, stdout, stderr } = runCli(['create', target], {
+      timeout: 120_000,
+      env: { NAJM_CREATE_PACKAGE_VERSION: '1.0.0' },
+    });
     assert.equal(status, 0, `stdout:\n${stdout}\nstderr:\n${stderr}`);
     assert.ok(fs.existsSync(path.join(target, 'package.json')));
     assert.ok(fs.existsSync(path.join(target, 'pnpm-lock.yaml')), 'create should run pnpm install');
@@ -108,6 +120,37 @@ await test('unknown flags and unexpected extra args fail with usage', () => {
   const extraArg = runCli(['build', 'extra']);
   assert.notEqual(extraArg.status, 0);
   assert.match(`${extraArg.stdout}\n${extraArg.stderr}`, /unexpected argument "extra"/);
+});
+
+await test('doctor and lint inspect the consumer working directory, not the framework repo', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'najm-cli-cwd-test-'));
+  const target = path.join(tmp, 'consumer-app');
+  try {
+    fs.mkdirSync(path.join(target, 'src', 'pages'), { recursive: true });
+    fs.writeFileSync(path.join(target, 'package.json'), JSON.stringify({
+      type: 'module',
+      dependencies: { '@monsef-nbj/najm': '1.1.0-rc.0' },
+    }, null, 2), 'utf8');
+    fs.writeFileSync(path.join(target, 'src', 'pages', 'index.najm'), `<script>
+  const title = 'Hello from cwd';
+</script>
+
+<template>
+  <main>{title}</main>
+</template>
+`, 'utf8');
+
+    const doctor = runCliIn(target, ['doctor']);
+    assert.equal(doctor.status, 0, `stdout:\n${doctor.stdout}\nstderr:\n${doctor.stderr}`);
+    assert.doesNotMatch(doctor.stdout, /local framework source found/);
+    assert.match(doctor.stdout, /package\.json has an "@monsef-nbj\/najm" dependency/);
+
+    const lint = runCliIn(target, ['lint']);
+    assert.equal(lint.status, 0, `stdout:\n${lint.stdout}\nstderr:\n${lint.stderr}`);
+    assert.match(lint.stdout, /no problems found/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 /* ------------------------------------------------------------------ */
@@ -376,7 +419,10 @@ await test('create-najm-app (REAL subprocess): `tsx cli/najm.ts create-najm-app 
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'najm-create-app-cli-test-'));
   const target = path.join(tmp, 'cli-scaffolded-app');
   try {
-    const { status, stdout } = runCli(['create-najm-app', target]);
+    const { status, stdout } = runCli(['create-najm-app', target], {
+      timeout: 120_000,
+      env: { NAJM_CREATE_PACKAGE_VERSION: '1.0.0' },
+    });
     assert.equal(status, 0, `stdout:\n${stdout}`);
     assert.ok(fs.existsSync(path.join(target, 'package.json')));
     assert.ok(fs.existsSync(path.join(target, 'src', 'pages', 'index.najm')));

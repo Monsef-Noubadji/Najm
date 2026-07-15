@@ -7,8 +7,8 @@ import { scaffoldApp } from './scaffold';
 function readVersion(): string {
   const here = path.dirname(fileURLToPath(import.meta.url));
   const candidates = [
-    path.resolve(here, '..', 'package.json'),
     path.resolve(here, '..', 'packages', 'najm', 'package.json'),
+    path.resolve(here, '..', 'package.json'),
   ];
 
   for (const candidate of candidates) {
@@ -18,6 +18,10 @@ function readVersion(): string {
   }
 
   return '0.0.0';
+}
+
+function scaffoldPackageVersion(): string {
+  return process.env.NAJM_CREATE_PACKAGE_VERSION || readVersion();
 }
 
 function usage(): void {
@@ -59,7 +63,7 @@ export async function runCreateApp(argv: string[], opts: { cwd?: string } = {}):
 
   try {
     const target = path.resolve(cwd, first);
-    const result = scaffoldApp(target, { install: true, packageVersion: readVersion() });
+    const result = scaffoldApp(target, { install: true, packageVersion: scaffoldPackageVersion() });
     console.log(`\n  Najm project created in ${result.dir}\n`);
     return result.installOk ? 0 : 1;
   } catch (error) {
