@@ -42,7 +42,7 @@
     "@types/vscode": "^1.125.0",
     "playwright": "^1.61.1",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
+    "typescript": "^7.0.2",
     "vite": "^6.0.0",
     "vitepress": "^1.6.4"
   },
