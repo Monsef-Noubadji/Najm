@@ -26,6 +26,8 @@ features:
     details: File routes, layouts, middleware, static generation, and request-time rendering share one model.
 ---
 
+<HomeSignal />
+
 ## A framework for engineers who want to see the mechanism
 
 Najm compiles `.najm` components into an SSR string builder and a hydration
