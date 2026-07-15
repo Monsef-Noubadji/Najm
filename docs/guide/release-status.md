@@ -1,11 +1,11 @@
 # Release status
 
-Najm `1.0.0-rc.1` is the API-frozen release candidate for the first stable line. The four public package names, export paths, and Tier 1 contracts are fixed pending evidence-based validation.
+Najm `1.0.0` is the first stable release. The four public package names, export paths, and Tier 1 contracts follow semantic-versioning compatibility guarantees.
 
 ## Adoption policy
 
-- Install all four packages from `next` and commit the lockfile.
-- Review release notes before upgrading to another RC.
+- Install all four packages at the same stable version and commit the lockfile.
+- Review release notes before upgrading.
 - Run SSR, hydration, route, and middleware integration tests in CI.
 - Treat undocumented internals as unsupported.
 - Report security issues privately through GitHub vulnerability reporting.

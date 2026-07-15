@@ -45,5 +45,5 @@ export default function Counter() {
 }
 ```
 
-Najm `1.0.0-rc.1` is API-frozen for release-candidate validation. Its public
-stability tiers are documented in [RFC-0018](/rfcs/RFC-0018-public-api-stability).
+Najm `1.0.0` is stable. Its public stability tiers and compatibility guarantees
+are documented in [RFC-0018](/rfcs/RFC-0018-public-api-stability).

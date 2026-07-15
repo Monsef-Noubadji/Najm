@@ -13,7 +13,7 @@ The `.najm` compiler turns templates into two coordinated programs: an SSR strin
 - `@monsef-nbj/najm-router` resolves file routes, layouts, parameters, and middleware.
 - `@monsef-nbj/najm-server` exposes development, build, and preview tooling entry modules.
 
-Najm requires Node.js 20 or newer. Version `1.0.0-rc.1` is API-frozen while the release evidence is completed; read [Release status](./release-status) before adopting it for a critical system.
+Najm requires Node.js 20 or newer. Version `1.0.0` is the stable compatibility baseline; read [Release status](./release-status) before adopting it for a critical system.
 
 ## Next step
 

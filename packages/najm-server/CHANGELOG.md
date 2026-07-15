@@ -1,5 +1,19 @@
 # @monsef-nbj/najm-server
 
+## 1.0.0
+
+### Major Changes
+
+- ecee204: Establish the Najm 1.0 public compatibility contract with classified API
+  tiers, clean packed-package consumer verification, and version-aware release
+  channels. The runtime, compiler, router, and server packages remain a fixed
+  version group. The repository CLI and `create-najm-app` remain deferred and
+  are not advertised by package manifests.
+
+### Patch Changes
+
+- f56b060: Resolve adopter application roots from the working directory and load the runtime through the published `@monsef-nbj/najm/core` export. Published development and production commands now work outside the Najm repository.
+
 ## 1.0.0-rc.1
 
 ### Patch Changes

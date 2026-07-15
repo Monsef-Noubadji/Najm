@@ -4,7 +4,7 @@
 
 [Engineering documentation](https://monsef-noubadji.github.io/Najm/) | [Getting started](https://monsef-noubadji.github.io/Najm/guide/introduction) | [API reference](https://monsef-noubadji.github.io/Najm/reference/runtime) | [Contributing](https://monsef-noubadji.github.io/Najm/contributing/)
 
-> Najm `1.0.0-rc.1` is API-frozen for release-candidate validation. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) before production use.
+> Najm `1.0.0` is the first stable release. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) for compatibility and support policy.
 
 ## Why Najm
 
@@ -19,7 +19,7 @@
 Node.js 20 or newer is required.
 
 ```bash
-npm install @monsef-nbj/najm@next @monsef-nbj/najm-compiler@next @monsef-nbj/najm-router@next @monsef-nbj/najm-server@next
+npm install @monsef-nbj/najm @monsef-nbj/najm-compiler @monsef-nbj/najm-router @monsef-nbj/najm-server
 ```
 
 ```ts

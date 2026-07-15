@@ -1,6 +1,6 @@
 {
   "name": "@monsef-nbj/najm",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "description": "Najm's reactivity core, component runtime, lifecycle, and hydration engine.",
   "repository": {
     "type": "git",

@@ -1,5 +1,15 @@
 # @monsef-nbj/najm
 
+## 1.0.0
+
+### Major Changes
+
+- ecee204: Establish the Najm 1.0 public compatibility contract with classified API
+  tiers, clean packed-package consumer verification, and version-aware release
+  channels. The runtime, compiler, router, and server packages remain a fixed
+  version group. The repository CLI and `create-najm-app` remain deferred and
+  are not advertised by package manifests.
+
 ## 1.0.0-rc.1
 
 ## 1.0.0-rc.0
