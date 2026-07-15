@@ -34,13 +34,16 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run build:packages
+      - run: npm run test:packages
+      - run: npm run bench
+      - run: npm run docs:check
 
       - name: Version or publish
         uses: changesets/action@v1
         with:
-          # Beta line publishes under the `beta` dist-tag; `latest` stays
-          # on the last stable until Beta graduates.
-          publish: npm run release
+          # RC versions publish under `next`; stable versions publish under
+          # `latest`. scripts/release-tag.ts rejects every other prerelease.
+          publish: npm run release:ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
