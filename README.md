@@ -5,12 +5,12 @@ interaction requires it.** No Virtual DOM. Zero JS by default. Signals,
 islands, file-based SSR routing — compiled, not reconciled.
 
 > نجم — "star" in Arabic. Beta (`0.3.0-beta.0`): install from npm with
-> `npm install najm@beta`; API stability tiers are defined in
+> `npm install @monsef-nbj/najm@beta`; API stability tiers are defined in
 > [RFC-0018](docs/rfcs/RFC-0018-public-api-stability.md).
 
 ```ts
 // Counter.najm — a functional component: the closure IS the instance
-import { signal, onMounted } from "najm/core";
+import { signal, onMounted } from "@monsef-nbj/najm/core";
 
 export default function Counter(props = {}) {
   const count = signal(props.start ?? 0);

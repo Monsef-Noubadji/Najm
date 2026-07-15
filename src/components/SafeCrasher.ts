@@ -21,7 +21,7 @@
  * already await component includes correctly, but only inside the
  * compiler-generated ssr(), never duplicated into hydrate().
  */
-import { withErrorBoundary } from 'najm/core';
+import { withErrorBoundary } from '@monsef-nbj/najm/core';
 import Crasher from './Crasher.najm';
 
 export default withErrorBoundary(Crasher, (error, phase) => {

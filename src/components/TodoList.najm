@@ -1,4 +1,4 @@
-import { signal, computed, onMounted, onUpdated, onDestroyed } from "najm/core";
+import { signal, computed, onMounted, onUpdated, onDestroyed } from "@monsef-nbj/najm/core";
 
 /**
  * Beta functional component. The function body runs once per instance —

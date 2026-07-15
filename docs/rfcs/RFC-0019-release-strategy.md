@@ -5,8 +5,9 @@
 
 ## Summary
 
-Najm publishes four packages on one version line: `najm`, `najm-compiler`,
-`najm-router`, and `najm-server`. npm workspaces provide the distribution
+Najm publishes four scoped packages on one version line: `@monsef-nbj/najm`,
+`@monsef-nbj/najm-compiler`, `@monsef-nbj/najm-router`, and
+`@monsef-nbj/najm-server`. npm workspaces provide the distribution
 boundary, Changesets versions the four packages as a fixed group, and GitHub
 Actions publishes beta releases with npm provenance.
 
@@ -21,16 +22,17 @@ The framework was developed under the working name Mono and renamed to Najm
 before its first public release. The npm names checked on 2026-07-14 were:
 
 ```text
-najm             available; runtime package
-najm-compiler    available; compiler and Vite plugin
-najm-router      available; router and middleware
-najm-server      available; executable server entry modules
+@monsef-nbj/najm             runtime package
+@monsef-nbj/najm-compiler    compiler and Vite plugin
+@monsef-nbj/najm-router      router and middleware
+@monsef-nbj/najm-server      executable server entry modules
 create-najm-app  available; reserved for a future standalone creator
 najm-core        taken by an unrelated package
 ```
 
-The core package is therefore `najm`; `najm/core` remains an alias required by
-the compiler's generated imports.
+The public packages use the npm account scope because unscoped first-publish
+names triggered npm's similarity protection. `@monsef-nbj/najm/core` is the
+runtime alias required by the compiler's generated imports.
 
 ## Distribution model
 
@@ -39,19 +41,19 @@ and generated `dist/` output. Source remains in `runtime/`, `compiler/`,
 `router/`, and `server/`.
 
 ```text
-najm                 <- runtime/index.ts
-najm-compiler        <- compiler/ plus a package public-entry shim
-najm-router          <- router/ plus a package public-entry shim
-najm-server/dev      <- server/dev.ts
-najm-server/build    <- server/build.ts
-najm-server/serve    <- server/serve.ts
+@monsef-nbj/najm                 <- runtime/index.ts
+@monsef-nbj/najm-compiler        <- compiler/ plus a package public-entry shim
+@monsef-nbj/najm-router          <- router/ plus a package public-entry shim
+@monsef-nbj/najm-server/dev      <- server/dev.ts
+@monsef-nbj/najm-server/build    <- server/build.ts
+@monsef-nbj/najm-server/serve    <- server/serve.ts
 ```
 
 The artifacts are self-contained rather than expressing dependencies on one
 another. This matches the current relative-import source graph and prevents
 workspace-only dependency specifiers from leaking into published manifests.
 Vite is a peer dependency of the compiler and server packages. The three
-`najm-server/*` exports execute immediately when loaded; smoke verification
+`@monsef-nbj/najm-server/*` exports execute immediately when loaded; smoke verification
 therefore resolves those exports without importing them.
 
 ## CLI scope

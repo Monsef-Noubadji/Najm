@@ -1,4 +1,4 @@
-# najm-router
+# @monsef-nbj/najm-router
 
 ## 0.3.0-beta.0
 

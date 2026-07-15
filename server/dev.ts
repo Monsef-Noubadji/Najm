@@ -43,7 +43,7 @@ const vite = await createViteServer({
     // bridge in Najm's core, so no dep pre-bundling for guest
     // frameworks belongs here.
     alias: [
-      { find: 'najm/core', replacement: runtimeIndex },
+      { find: '@monsef-nbj/najm/core', replacement: runtimeIndex },
     ],
   },
   server: { middlewareMode: true },

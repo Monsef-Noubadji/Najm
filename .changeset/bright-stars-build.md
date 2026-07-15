@@ -1,8 +1,8 @@
 ---
-"najm": patch
-"najm-compiler": patch
-"najm-router": patch
-"najm-server": patch
+"@monsef-nbj/najm": patch
+"@monsef-nbj/najm-compiler": patch
+"@monsef-nbj/najm-router": patch
+"@monsef-nbj/najm-server": patch
 ---
 
 Prepare the first Najm beta artifacts with verified npm workspace builds,

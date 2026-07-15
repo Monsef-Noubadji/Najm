@@ -1,4 +1,4 @@
-# najm
+# @monsef-nbj/najm
 
 ## 0.3.0-beta.0
 

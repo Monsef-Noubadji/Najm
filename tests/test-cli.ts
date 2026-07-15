@@ -66,7 +66,7 @@ await test('doctor (direct call): this repo passes Node version, has local frame
   const pagesCheck = result.checks.find((c) => c.message.includes('src/pages/'))!;
   assert.equal(pagesCheck.ok, true);
 
-  const depCheck = result.checks.find((c) => c.message.includes('"najm" dependency'))!;
+  const depCheck = result.checks.find((c) => c.message.includes('"@monsef-nbj/najm" dependency'))!;
   assert.equal(depCheck.ok, true, 'local framework source should satisfy the dependency check for this monorepo');
 });
 
@@ -278,16 +278,16 @@ await test('create-najm-app: generated package.json is valid JSON and references
     scaffoldApp(target);
     const raw = fs.readFileSync(path.join(target, 'package.json'), 'utf8');
     const pkg = JSON.parse(raw); // throws if not valid JSON
-    assert.ok(pkg.dependencies['najm'], 'expected a najm dependency');
-    assert.ok(pkg.dependencies['najm-compiler'], 'expected a najm-compiler dependency');
-    assert.ok(pkg.dependencies['najm-router'], 'expected a najm-router dependency');
+    assert.ok(pkg.dependencies['@monsef-nbj/najm'], 'expected a scoped najm dependency');
+    assert.ok(pkg.dependencies['@monsef-nbj/najm-compiler'], 'expected a scoped compiler dependency');
+    assert.ok(pkg.dependencies['@monsef-nbj/najm-router'], 'expected a scoped router dependency');
 
     const wholeTree = [
       raw,
       fs.readFileSync(path.join(target, 'src', 'pages', 'index.najm'), 'utf8'),
       fs.readFileSync(path.join(target, 'src', 'components', 'Counter.najm'), 'utf8'),
     ].join('\n');
-    // `najm/core` is the PUBLISHED subpath of the `najm` package (its
+    // `@monsef-nbj/najm/core` is the published runtime subpath (its
     // "./core" export) — the exact specifier the compiler emits — so a
     // generated project referencing it is correct, not a leaked repo
     // alias. (Pre-rebrand, "mono/core" was repo-local-only and the

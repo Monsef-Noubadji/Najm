@@ -1,4 +1,4 @@
-import { signal, computed } from "najm/core";
+import { signal, computed } from "@monsef-nbj/najm/core";
 
 /**
  * Benchmark island fixture — RFC-0014.

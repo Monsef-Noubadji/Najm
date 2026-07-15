@@ -35,7 +35,7 @@ import { scanDeclarations, extractParamSource } from './semantics';
 import type { Scope } from './semantics';
 import type { NajmPlugin } from './plugin-api';
 
-const RUNTIME = 'najm/core';
+const RUNTIME = '@monsef-nbj/najm/core';
 
 /** The $-prefixed helper surface both compilers target. */
 const HELPER_IMPORT = `import {

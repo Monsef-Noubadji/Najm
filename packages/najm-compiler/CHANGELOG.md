@@ -1,4 +1,4 @@
-# najm-compiler
+# @monsef-nbj/najm-compiler
 
 ## 0.3.0-beta.0
 

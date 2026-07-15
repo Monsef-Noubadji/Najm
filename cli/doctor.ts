@@ -60,7 +60,7 @@ export function runDoctor(root: string): DoctorResult {
   if (fs.existsSync(pkgPath)) {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
     const deps = { ...pkg.dependencies, ...pkg.devDependencies };
-    hasNajmDep = 'najm' in deps;
+    hasNajmDep = '@monsef-nbj/najm' in deps;
   }
   const hasLocalFramework =
     fs.existsSync(path.join(root, 'compiler')) &&
@@ -69,10 +69,10 @@ export function runDoctor(root: string): DoctorResult {
   checks.push({
     ok: hasNajmDep || hasLocalFramework,
     message: hasNajmDep
-      ? 'package.json has a "najm" dependency'
+      ? 'package.json has an "@monsef-nbj/najm" dependency'
       : hasLocalFramework
-        ? 'package.json has a "najm" dependency (local framework source found)'
-        : 'package.json has no "najm" dependency',
+        ? 'package.json has an "@monsef-nbj/najm" dependency (local framework source found)'
+        : 'package.json has no "@monsef-nbj/najm" dependency',
   });
 
   // 3. src/pages/ exists.

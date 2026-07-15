@@ -2,10 +2,10 @@
   "mode": "pre",
   "tag": "beta",
   "initialVersions": {
-    "najm": "0.3.0-dev",
-    "najm-compiler": "0.3.0-dev",
-    "najm-router": "0.3.0-dev",
-    "najm-server": "0.3.0-dev"
+    "@monsef-nbj/najm": "0.3.0-dev",
+    "@monsef-nbj/najm-compiler": "0.3.0-dev",
+    "@monsef-nbj/najm-router": "0.3.0-dev",
+    "@monsef-nbj/najm-server": "0.3.0-dev"
   },
   "changesets": [
     "bright-stars-build"

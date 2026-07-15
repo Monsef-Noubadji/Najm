@@ -55,7 +55,7 @@ const distDir = path.join(root, 'dist');
 const runtimeIndex = path.join(repoRoot, 'runtime', 'index.ts');
 
 const aliases = [
-  { find: 'najm/core', replacement: runtimeIndex },
+  { find: '@monsef-nbj/najm/core', replacement: runtimeIndex },
 ];
 
 /* ------------------------------------------------------------------ */

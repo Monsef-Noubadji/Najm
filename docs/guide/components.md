@@ -36,10 +36,10 @@ analysis).
 
 ## Signals and reactivity
 
-Import reactivity primitives from `najm/core`:
+Import reactivity primitives from `@monsef-nbj/najm/core`:
 
 ```js
-import { signal } from "najm/core";
+import { signal } from "@monsef-nbj/najm/core";
 
 export default function Counter(props = {}) {
   const count = signal(props.initial ?? 0);
@@ -66,7 +66,7 @@ export default function Counter(props = {}) {
 ### `computed`, `effect`, `batch`, `untrack`, `onCleanup`
 
 ```js
-import { signal, computed, effect, batch, untrack, onCleanup } from "najm/core";
+import { signal, computed, effect, batch, untrack, onCleanup } from "@monsef-nbj/najm/core";
 
 export default function Thermometer(props = {}) {
   const celsius = signal(21);
@@ -121,7 +121,7 @@ reactively; signals auto-unwrap.
 ### Attributes — static, dynamic, and boolean
 
 ```js
-import { signal } from "najm/core";
+import { signal } from "@monsef-nbj/najm/core";
 
 export default function StatusBadge(props = {}) {
   const online = signal(false);
@@ -155,7 +155,7 @@ Two forms:
   function is called with the DOM event.
 
 ```js
-import { signal } from "najm/core";
+import { signal } from "@monsef-nbj/najm/core";
 
 export default function SearchForm(props = {}) {
   const query = signal("");
@@ -189,7 +189,7 @@ Pass the **signal itself** (not `.value`). Each binding compiles to exactly
 one effect (signal → DOM) plus one listener (DOM → signal).
 
 ```js
-import { signal, computed } from "najm/core";
+import { signal, computed } from "@monsef-nbj/najm/core";
 
 export default function Settings(props = {}) {
   const username = signal("ada");
@@ -214,7 +214,7 @@ export default function Settings(props = {}) {
 Two forms: with and without an index variable.
 
 ```js
-import { signal } from "najm/core";
+import { signal } from "@monsef-nbj/najm/core";
 
 export default function Leaderboard(props = {}) {
   const tags = ["compiler-first", "zero-js", "islands"];
@@ -312,7 +312,7 @@ serializable.
 Hooks attach to the component instance during setup:
 
 ```js
-import { signal, computed, onMounted, onUpdated, onDestroyed } from "najm/core";
+import { signal, computed, onMounted, onUpdated, onDestroyed } from "@monsef-nbj/najm/core";
 
 export default function Ticker(props = {}) {
   const ticks = signal(0);
@@ -358,7 +358,7 @@ Wrap it in a plain `.ts` module (this is this repo's real, working
 the page itself free of any boundary wiring):
 
 ```ts
-import { withErrorBoundary } from 'najm/core';
+import { withErrorBoundary } from '@monsef-nbj/najm/core';
 import Crasher from './Crasher.najm';
 
 export default withErrorBoundary(Crasher, (error, phase) => {
@@ -379,7 +379,7 @@ objects are reactive too), bound actions, and memoized getters. Define it
 once in a shared module:
 
 ```ts
-import { defineStore } from "najm/core";
+import { defineStore } from "@monsef-nbj/najm/core";
 
 export const useCartStore = defineStore({
   state: () => ({
@@ -431,7 +431,7 @@ export default function CartWidget(props = {}) {
 - `cart.$getters.name` — memoized derived values.
 - `cart.$subscribe(fn)` — observe every committed action;
   `cart.$replaceState(next)` swaps the whole tree (this is what powers the
-  opt-in time-travel devtools, `enableTimeTravel()` from `najm/core`).
+  opt-in time-travel devtools, `enableTimeTravel()` from `@monsef-nbj/najm/core`).
 
 ## Context — `createContext` / `provide` / `inject`
 
@@ -440,7 +440,7 @@ tree that owns your effects. Create a typed context handle in a shared
 module:
 
 ```ts
-import { createContext } from "najm/core";
+import { createContext } from "@monsef-nbj/najm/core";
 
 export const ThemeContext = createContext<"light" | "dark">("theme", "light");
 ```
@@ -449,7 +449,7 @@ export const ThemeContext = createContext<"light" | "dark">("theme", "light");
 can `inject()` it:
 
 ```js
-import { provide } from "najm/core";
+import { provide } from "@monsef-nbj/najm/core";
 import { ThemeContext } from "./theme";
 import ThemedButton from "./ThemedButton.najm";
 
@@ -469,7 +469,7 @@ export default function App(props = {}) {
 ```
 
 ```js
-import { inject } from "najm/core";
+import { inject } from "@monsef-nbj/najm/core";
 import { ThemeContext } from "./theme";
 
 export default function ThemedButton(props = {}) {

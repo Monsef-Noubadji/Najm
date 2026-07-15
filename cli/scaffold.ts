@@ -4,8 +4,8 @@
  * ONE template — this repo's own src/pages/ shape (a layout.najm, an
  * index.najm, one example island component, one example dynamic
  * route) — copied into a new directory, with a generated package.json
- * pointing at the eventual PUBLISHED package names (najm/
- * najm-compiler/najm-router, per packages/README.md) instead of this
+ * pointing at the published @monsef-nbj package names (per
+ * packages/README.md) instead of this
  * repo-internal aliases. No Vitest: per
  * RFC-0015, a generated project's tests/ gets one example file in the
  * same framework-free node:assert style tests/test-signals.ts uses,
@@ -65,7 +65,7 @@ export default function HomePage(props = {}) {
 }
 `;
 
-const COUNTER_NAJM = `import { signal } from "najm/core";
+const COUNTER_NAJM = `import { signal } from "@monsef-nbj/najm/core";
 
 /**
  * Example island. Add client:load (or client:visible) on the
@@ -118,9 +118,9 @@ function packageJson(appName: string): string {
         test: 'tsx tests/test-example.ts',
       },
       dependencies: {
-        'najm': '^0.1.0',
-        'najm-compiler': '^0.1.0',
-        'najm-router': '^0.1.0',
+        '@monsef-nbj/najm': '0.3.0-beta.0',
+        '@monsef-nbj/najm-compiler': '0.3.0-beta.0',
+        '@monsef-nbj/najm-router': '0.3.0-beta.0',
       },
       devDependencies: {
         tsx: '^4.19.2',
