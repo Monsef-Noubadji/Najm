@@ -27,7 +27,8 @@ import path from 'node:path';
 import os from 'node:os';
 import http from 'node:http';
 import { fileURLToPath } from 'node:url';
-import { spawn, spawnSync } from 'node:child_process';
+import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
+import { once } from 'node:events';
 import { runDoctor } from '../cli/doctor';
 import { lintSource, lintDir } from '../cli/lint';
 import { scaffoldApp } from '../cli/scaffold';
@@ -200,10 +201,22 @@ function httpGet(url: string, timeoutMs: number): Promise<number> {
   });
 }
 
+async function terminateProcessTree(child: ChildProcess): Promise<void> {
+  if (child.exitCode !== null || child.pid === undefined) return;
+  const exited = once(child, 'exit');
+  if (process.platform === 'win32') {
+    spawnSync('taskkill.exe', ['/pid', String(child.pid), '/T', '/F'], { stdio: 'ignore' });
+  } else {
+    process.kill(-child.pid, 'SIGTERM');
+  }
+  await exited;
+}
+
 async function verifyPortWrapper(command: 'dev' | 'preview', port: number): Promise<void> {
   const child = spawn(process.execPath, [tsxCli, cliEntry, command, '--port', String(port)], {
     cwd: repoRoot,
     stdio: 'pipe',
+    detached: process.platform !== 'win32',
   });
   try {
     // Poll until the server accepts connections (or fail after ~15s) —
@@ -222,7 +235,7 @@ async function verifyPortWrapper(command: 'dev' | 'preview', port: number): Prom
     }
     assert.equal(status, 200, `expected 200 from ${command} server's /about route on the --port-selected port`);
   } finally {
-    child.kill();
+    await terminateProcessTree(child);
   }
 }
 
