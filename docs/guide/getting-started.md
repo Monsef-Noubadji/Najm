@@ -2,13 +2,37 @@
 
 ## Prerequisites
 
-Use Node.js 20 or newer and npm. The CLI remains deferred and repository-only, so adopters configure Vite and package scripts directly.
+Use Node.js 20 or newer and pnpm.
 
-## Install
+## Create a project
 
 ```bash
-npm install @monsef-nbj/najm @monsef-nbj/najm-compiler @monsef-nbj/najm-router @monsef-nbj/najm-server
-npm install --save-dev vite@^6 typescript@^5.7
+pnpm dlx @monsef-nbj/najm create my-app
+cd my-app
+pnpm run dev
+```
+
+The create command writes a starter app, installs dependencies with pnpm, and adds the standard project scripts:
+
+```json
+{
+  "scripts": {
+    "dev": "najm dev",
+    "build": "najm build",
+    "preview": "najm preview",
+    "lint": "najm lint",
+    "doctor": "najm doctor"
+  }
+}
+```
+
+## Manual install
+
+If you are adding Najm to an existing project, install the coordinated packages directly:
+
+```bash
+pnpm add @monsef-nbj/najm @monsef-nbj/najm-compiler @monsef-nbj/najm-router @monsef-nbj/najm-server vite
+pnpm add -D typescript tsx
 ```
 
 Configure the compiler in `vite.config.ts`:
@@ -25,9 +49,11 @@ Add application scripts to `package.json`:
 ```json
 {
   "scripts": {
-    "dev": "node --import @monsef-nbj/najm-server/dev",
-    "build": "node --import @monsef-nbj/najm-server/build",
-    "preview": "node --import @monsef-nbj/najm-server/serve"
+    "dev": "najm dev",
+    "build": "najm build",
+    "preview": "najm preview",
+    "lint": "najm lint",
+    "doctor": "najm doctor"
   }
 }
 ```
@@ -52,6 +78,6 @@ The heading is server HTML. The event makes this component interactive, so the c
 
 ## Development loop
 
-Run `npm run dev` to start development, `npm run build` to create production output, and `npm run preview` to serve that output. These scripts execute the published server tooling modules without requiring a global CLI.
+Run `pnpm run dev` to start development, `pnpm run build` to create production output, and `pnpm run preview` to serve that output. Use `pnpm run doctor` when setup fails or before opening a release issue.
 
 Continue with [Components](./components) and [Routing and SSR](./routing-and-ssr).

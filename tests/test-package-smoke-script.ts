@@ -1,8 +1,20 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import path from 'node:path';
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 assert.equal(pkg.scripts['test:packages'], 'tsx scripts/test-packages.ts');
+
+const repoRoot = process.cwd();
+const runtimePackage = JSON.parse(fs.readFileSync(path.join(repoRoot, 'packages', 'najm', 'package.json'), 'utf8'));
+assert.equal(runtimePackage.bin.najm, './dist/cli.js');
+assert.equal(runtimePackage.bin['create-najm-app'], './dist/create-app.js');
+assert.ok(runtimePackage.dependencies['@monsef-nbj/najm-compiler']);
+assert.ok(runtimePackage.dependencies['@monsef-nbj/najm-router']);
+assert.ok(runtimePackage.dependencies['@monsef-nbj/najm-server']);
+assert.ok(runtimePackage.peerDependencies.vite);
+assert.ok(fs.existsSync(path.join(repoRoot, 'packages', 'najm', 'dist', 'cli.js')));
+assert.ok(fs.existsSync(path.join(repoRoot, 'packages', 'najm', 'dist', 'create-app.js')));
 
 const source = fs.readFileSync('scripts/test-packages.ts', 'utf8');
 const serveSource = fs.readFileSync('server/serve.ts', 'utf8');

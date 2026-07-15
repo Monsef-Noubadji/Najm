@@ -1,5 +1,11 @@
 # @monsef-nbj/najm-compiler
 
+## 1.1.0-rc.0
+
+### Patch Changes
+
+- Coordinate the compiler package with the `1.1.0-rc.0` CLI hardening release.
+
 ## 1.0.0
 
 ### Major Changes

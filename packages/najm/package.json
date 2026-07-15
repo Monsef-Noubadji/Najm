@@ -1,6 +1,6 @@
 {
   "name": "@monsef-nbj/najm",
-  "version": "1.0.0",
+  "version": "1.1.0-rc.0",
   "description": "Najm's reactivity core, component runtime, lifecycle, and hydration engine.",
   "repository": {
     "type": "git",
@@ -22,6 +22,10 @@
     "README.md",
     "LICENSE"
   ],
+  "bin": {
+    "najm": "./dist/cli.js",
+    "create-najm-app": "./dist/create-app.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -36,6 +40,14 @@
   "scripts": {
     "build": "tsup",
     "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@monsef-nbj/najm-compiler": "1.1.0-rc.0",
+    "@monsef-nbj/najm-router": "1.1.0-rc.0",
+    "@monsef-nbj/najm-server": "1.1.0-rc.0"
+  },
+  "peerDependencies": {
+    "vite": ">=5"
   },
   "devDependencies": {
     "tsup": "^8.0.0",

@@ -17,4 +17,6 @@
 | `@monsef-nbj/najm-server/serve` | Starts production preview | Executable tooling |
 | `@monsef-nbj/najm-server/package.json` | Package metadata | Tooling |
 
+`@monsef-nbj/najm` is both the runtime package and the umbrella CLI package. Runtime imports stay at `@monsef-nbj/najm` or `@monsef-nbj/najm/core`; CLI commands are exposed through the package's `najm` and `create-najm-app` bins.
+
 All packages require Node.js 20+. Compiler and server packages accept Vite 5 or newer as a peer. Server exports execute work when loaded and are intended as script entry modules, not application libraries.

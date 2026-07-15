@@ -1,5 +1,12 @@
 # @monsef-nbj/najm-server
 
+## 1.1.0-rc.0
+
+### Patch Changes
+
+- Coordinate the server package with the `1.1.0-rc.0` CLI hardening release
+  consumed by the published `@monsef-nbj/najm` binaries.
+
 ## 1.0.0
 
 ### Major Changes

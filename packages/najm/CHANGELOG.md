@@ -1,5 +1,14 @@
 # @monsef-nbj/najm
 
+## 1.1.0-rc.0
+
+### Minor Changes
+
+- Promote `@monsef-nbj/najm` into the umbrella framework package with published
+  `najm` and `create-najm-app` binaries while preserving the runtime exports.
+  Project creation now scaffolds a pnpm-based starter app and `najm test`
+  remains deferred.
+
 ## 1.0.0
 
 ### Major Changes

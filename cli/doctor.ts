@@ -89,6 +89,7 @@ export function runDoctor(root: string): DoctorResult {
   const hasManifest = fs.existsSync(manifestPath);
   checks.push({
     ok: hasManifest,
+    info: !hasManifest,
     message: hasManifest
       ? 'dist/manifest.json found'
       : 'dist/ not found — run `najm build` before `najm preview`',
