@@ -22,6 +22,11 @@ assert.ok(
   workflow.indexOf('npx playwright install --with-deps chromium') < workflow.indexOf('npm run bench'),
   'clean CI must install Chromium before browser benchmarks',
 );
+assert.ok(
+  workflow.includes('npm install --global npm@11.18.0') &&
+  workflow.indexOf('npm install --global npm@11.18.0') < workflow.indexOf('npm ci'),
+  'release CI must install an npm CLI version that supports trusted publishing',
+);
 assert.ok(!workflow.includes('--tag beta'), 'release workflow must not hard-code beta');
 assert.ok(
   !releaseScript.includes("['run', 'release', '--', '--tag', 'next']"),
