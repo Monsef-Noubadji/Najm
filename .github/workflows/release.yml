@@ -37,6 +37,7 @@ jobs:
       # maps, so declarations must exist before a clean-checkout typecheck.
       - run: npm run typecheck
       - run: npm run test:packages
+      - run: npx playwright install --with-deps chromium
       - run: npm run bench
       - run: npm run docs:check
 

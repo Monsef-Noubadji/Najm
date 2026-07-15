@@ -16,6 +16,11 @@ assert.ok(
   workflow.indexOf('npm run build:packages') < workflow.indexOf('npm run typecheck'),
   'clean CI must build workspace declarations before typechecking adopter-style package imports',
 );
+assert.ok(
+  workflow.includes('npx playwright install --with-deps chromium') &&
+  workflow.indexOf('npx playwright install --with-deps chromium') < workflow.indexOf('npm run bench'),
+  'clean CI must install Chromium before browser benchmarks',
+);
 assert.ok(!workflow.includes('--tag beta'), 'release workflow must not hard-code beta');
 
 console.log('release channel: all assertions passed');
