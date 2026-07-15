@@ -12,6 +12,10 @@ const workflow = fs.readFileSync('.github/workflows/release.yml', 'utf8');
 for (const command of ['npm run test:packages', 'npm run bench', 'npm run docs:check', 'npm run release:ci']) {
   assert.ok(workflow.includes(command), `release workflow must run ${command}`);
 }
+assert.ok(
+  workflow.indexOf('npm run build:packages') < workflow.indexOf('npm run typecheck'),
+  'clean CI must build workspace declarations before typechecking adopter-style package imports',
+);
 assert.ok(!workflow.includes('--tag beta'), 'release workflow must not hard-code beta');
 
 console.log('release channel: all assertions passed');
