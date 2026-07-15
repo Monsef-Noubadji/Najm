@@ -27,7 +27,7 @@ export default defineConfig({
             { text: 'Components', link: '/guide/components' },
             { text: 'Routing and SSR', link: '/guide/routing-and-ssr' },
             { text: 'Production', link: '/guide/production' },
-            { text: 'Beta status', link: '/guide/beta-status' },
+            { text: 'Release status', link: '/guide/release-status' },
             { text: 'CLI', link: '/guide/cli' },
           ],
         },

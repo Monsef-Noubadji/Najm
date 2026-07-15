@@ -2,12 +2,12 @@
 
 ## Prerequisites
 
-Use Node.js 20 or newer and npm. The beta CLI is repository-only, so adopters should configure Vite directly rather than depending on a globally installed `najm` command.
+Use Node.js 20 or newer and npm. The CLI remains deferred and repository-only, so adopters configure Vite and package scripts directly.
 
 ## Install
 
 ```bash
-npm install @monsef-nbj/najm@beta @monsef-nbj/najm-compiler@beta @monsef-nbj/najm-router@beta @monsef-nbj/najm-server@beta
+npm install @monsef-nbj/najm@next @monsef-nbj/najm-compiler@next @monsef-nbj/najm-router@next @monsef-nbj/najm-server@next
 npm install --save-dev vite@^6 typescript@^5.7
 ```
 
@@ -18,6 +18,18 @@ import { defineConfig } from 'vite';
 import { najm } from '@monsef-nbj/najm-compiler/vite';
 
 export default defineConfig({ plugins: [najm()] });
+```
+
+Add application scripts to `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "node --import @monsef-nbj/najm-server/dev",
+    "build": "node --import @monsef-nbj/najm-server/build",
+    "preview": "node --import @monsef-nbj/najm-server/serve"
+  }
+}
 ```
 
 ## Your first component
@@ -38,6 +50,6 @@ The heading is server HTML. The event makes this component interactive, so the c
 
 ## Development loop
 
-In the Najm repository, `npm run dev` starts the development server, `npm run build` creates production output, and `npm run serve` previews it. Until the standalone project scaffolder is published, use those server entry modules as the canonical executable workflow.
+Run `npm run dev` to start development, `npm run build` to create production output, and `npm run preview` to serve that output. These scripts execute the published server tooling modules without requiring a global CLI.
 
 Continue with [Components](./components) and [Routing and SSR](./routing-and-ssr).

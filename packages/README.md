@@ -49,6 +49,7 @@ npm run build:packages
 npm run pack:packages
 ```
 
-Changesets keeps all four package versions fixed together. CI publishes the
-prerelease line with `npm run release`, npm provenance, and the `beta` dist-tag.
+Changesets keeps all four package versions fixed together. CI publishes
+`1.0.0-rc.0` with `npm run release:ci`, npm provenance, and the `next`
+dist-tag. Stable versions publish under `latest` only after promotion.
 See RFC-0018 and RFC-0019 for stability and promotion policy.

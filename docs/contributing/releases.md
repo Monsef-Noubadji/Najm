@@ -2,4 +2,4 @@
 
 Published changes use Changesets. Add a changeset with `npm run changeset`, select affected scoped packages, choose semver impact, and write adopter-facing release notes.
 
-Najm currently uses Changesets prerelease mode for the beta line. Maintainers run `npm run version:packages`, verify `npm run build:packages` and tarballs, then publish with `npm run release`. Check provenance, authentication, and Git tags before announcing a release.
+Najm uses Changesets prerelease mode with the `rc` tag. Release candidates publish under npm's `next` tag; stable versions publish under `latest`. Maintainers run the complete [1.0 release runbook](./1.0-release), including API, package-consumer, benchmark, documentation, provenance, and registry readback gates.
