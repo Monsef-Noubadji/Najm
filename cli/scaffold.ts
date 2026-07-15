@@ -13,6 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 function write(dir: string, rel: string, content: string): void {
   const full = path.join(dir, rel);
@@ -104,7 +105,7 @@ const GREET_NAJM = `<script>
 </style>
 `;
 
-function packageJson(appName: string): string {
+function packageJson(appName: string, version: string): string {
   return JSON.stringify(
     {
       name: appName,
@@ -115,12 +116,16 @@ function packageJson(appName: string): string {
         dev: 'najm dev',
         build: 'najm build',
         preview: 'najm preview',
+        lint: 'najm lint',
+        doctor: 'najm doctor',
         test: 'tsx tests/test-example.ts',
       },
       dependencies: {
-        '@monsef-nbj/najm': '0.3.0-beta.0',
-        '@monsef-nbj/najm-compiler': '0.3.0-beta.0',
-        '@monsef-nbj/najm-router': '0.3.0-beta.0',
+        '@monsef-nbj/najm': version,
+        '@monsef-nbj/najm-compiler': version,
+        '@monsef-nbj/najm-router': version,
+        '@monsef-nbj/najm-server': version,
+        vite: '^6.0.0',
       },
       devDependencies: {
         tsx: '^4.19.2',
@@ -157,13 +162,35 @@ const GITIGNORE = `node_modules/\ndist/\n`;
 export interface ScaffoldResult {
   dir: string;
   filesWritten: string[];
+  installOk: boolean;
 }
 
-export function scaffoldApp(targetDir: string): ScaffoldResult {
+export interface ScaffoldOptions {
+  install?: boolean;
+  packageVersion?: string;
+}
+
+function runPnpmInstall(targetDir: string): boolean {
+  const result = spawnSync('pnpm', ['install'], {
+    cwd: targetDir,
+    stdio: 'inherit',
+    shell: process.platform === 'win32',
+  });
+
+  if (result.error && (result.error as NodeJS.ErrnoException).code === 'ENOENT') {
+    console.error(`Project files were created, but pnpm was not found. Install pnpm, then run \`pnpm install\` in ${targetDir}.`);
+    return false;
+  }
+
+  return result.status === 0;
+}
+
+export function scaffoldApp(targetDir: string, options: ScaffoldOptions = {}): ScaffoldResult {
   if (fs.existsSync(targetDir) && fs.readdirSync(targetDir).length > 0) {
     throw new Error(`[create-najm-app] target directory ${targetDir} already exists and is not empty`);
   }
   const appName = path.basename(path.resolve(targetDir)) || 'najm-app';
+  const version = options.packageVersion ?? '1.1.0-rc.0';
 
   const files: [string, string][] = [
     ['src/pages/layout.najm', LAYOUT_NAJM],
@@ -171,11 +198,19 @@ export function scaffoldApp(targetDir: string): ScaffoldResult {
     ['src/pages/greet/[name].najm', GREET_NAJM],
     ['src/components/Counter.najm', COUNTER_NAJM],
     ['tests/test-example.ts', TEST_EXAMPLE],
-    ['package.json', packageJson(appName)],
+    ['package.json', packageJson(appName, version)],
     ['.gitignore', GITIGNORE],
   ];
 
   for (const [rel, content] of files) write(targetDir, rel, content);
 
-  return { dir: targetDir, filesWritten: files.map(([rel]) => rel) };
+  let installOk = true;
+  if (options.install ?? false) {
+    installOk = runPnpmInstall(targetDir);
+    if (!installOk) {
+      console.error(`Project files were created, but \`pnpm install\` failed. Resolve the package-manager error, then run \`pnpm install\` in ${targetDir}.`);
+    }
+  }
+
+  return { dir: targetDir, filesWritten: files.map(([rel]) => rel), installOk };
 }
