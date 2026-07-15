@@ -48,7 +48,7 @@ npm run cli -- dev          # or: npm run dev
   ▲ najm — dev server at http://localhost:3000
 ```
 
-Open <http://localhost:3000>. Routes are re-scanned per request in dev —
+Open `http://localhost:3000`. Routes are re-scanned per request in dev —
 adding a page under `src/pages/` is instantly live, with no restart and no
 route registration.
 
@@ -125,7 +125,7 @@ export default function HelloPage(props = {}) {
 }
 ```
 
-Visit <http://localhost:3000/hello> — it's already live. View the page
+Visit `http://localhost:3000/hello` — it's already live. View the page
 source: it is pure HTML with **no `<script>` tag**, because this page has no
 islands. Interactivity is something you add deliberately — see
 [Components](components.md) for signals and islands.
