@@ -72,5 +72,5 @@ export async function runCreateApp(argv: string[], opts: { cwd?: string } = {}):
   }
 }
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = process.argv[1] && fs.realpathSync(path.resolve(process.argv[1])) === fs.realpathSync(fileURLToPath(import.meta.url));
 if (isMain) runCreateApp(process.argv.slice(2)).then((code) => process.exit(code));

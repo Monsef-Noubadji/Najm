@@ -105,7 +105,30 @@ const GREET_NAJM = `<script>
 </style>
 `;
 
+function localTarballDependency(packageName: string): string | undefined {
+  const dir = process.env.NAJM_CREATE_LOCAL_TARBALL_DIR;
+  if (!dir) return undefined;
+  const fileBase = packageName.replace('@', '').replace('/', '-');
+  return `file:${path.join(dir, `${fileBase}-1.1.0-rc.0.tgz`).split(path.sep).join('/')}`;
+}
+
 function packageJson(appName: string, version: string): string {
+  const runtime = localTarballDependency('@monsef-nbj/najm') ?? version;
+  const compiler = localTarballDependency('@monsef-nbj/najm-compiler') ?? version;
+  const router = localTarballDependency('@monsef-nbj/najm-router') ?? version;
+  const server = localTarballDependency('@monsef-nbj/najm-server') ?? version;
+  const localOverrides = process.env.NAJM_CREATE_LOCAL_TARBALL_DIR
+    ? {
+        pnpm: {
+          overrides: {
+            '@monsef-nbj/najm-compiler': compiler,
+            '@monsef-nbj/najm-router': router,
+            '@monsef-nbj/najm-server': server,
+          },
+        },
+      }
+    : {};
+
   return JSON.stringify(
     {
       name: appName,
@@ -121,16 +144,17 @@ function packageJson(appName: string, version: string): string {
         test: 'tsx tests/test-example.ts',
       },
       dependencies: {
-        '@monsef-nbj/najm': version,
-        '@monsef-nbj/najm-compiler': version,
-        '@monsef-nbj/najm-router': version,
-        '@monsef-nbj/najm-server': version,
+        '@monsef-nbj/najm': runtime,
+        '@monsef-nbj/najm-compiler': compiler,
+        '@monsef-nbj/najm-router': router,
+        '@monsef-nbj/najm-server': server,
         vite: '^6.0.0',
       },
       devDependencies: {
         tsx: '^4.19.2',
         typescript: '^5.7.2',
       },
+      ...localOverrides,
     },
     null,
     2

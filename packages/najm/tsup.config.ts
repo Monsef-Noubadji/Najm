@@ -11,9 +11,6 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   target: 'es2022',
-  banner: {
-    js: '#!/usr/bin/env node',
-  },
   splitting: false,
   external: [
     '@monsef-nbj/najm-compiler',
