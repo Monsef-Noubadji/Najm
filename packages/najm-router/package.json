@@ -1,6 +1,6 @@
 {
   "name": "@monsef-nbj/najm-router",
-  "version": "0.3.0-beta.0",
+  "version": "1.0.0-rc.0",
   "description": "Najm's file-based router: page resolution, dynamic/catch-all params, nested layouts, and middleware (RFC-0008).",
   "repository": {
     "type": "git",

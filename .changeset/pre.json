@@ -1,13 +1,13 @@
 {
   "mode": "pre",
-  "tag": "beta",
+  "tag": "rc",
   "initialVersions": {
-    "@monsef-nbj/najm": "0.3.0-dev",
-    "@monsef-nbj/najm-compiler": "0.3.0-dev",
-    "@monsef-nbj/najm-router": "0.3.0-dev",
-    "@monsef-nbj/najm-server": "0.3.0-dev"
+    "@monsef-nbj/najm": "0.3.0",
+    "@monsef-nbj/najm-compiler": "0.3.0",
+    "@monsef-nbj/najm-router": "0.3.0",
+    "@monsef-nbj/najm-server": "0.3.0"
   },
   "changesets": [
-    "bright-stars-build"
+    "stable-stars-align"
   ]
 }
