@@ -15,7 +15,8 @@ for (const file of files) {
   assert.doesNotMatch(content, /0\.3\.0-dev|not yet published|git clone <this-repo>|from ['"]najm\/core['"]/i, `${file} contains stale guidance`);
 }
 const start = readFileSync('docs/guide/getting-started.md', 'utf8');
-assert.match(start, /npm install @monsef-nbj\/najm @monsef-nbj\/najm-compiler/);
+assert.match(start, /pnpm dlx @monsef-nbj\/najm create my-app/);
+assert.match(start, /"dev": "najm dev"/);
 assert.match(start, /@monsef-nbj\/najm\/core/);
 assert.match(start, /<template>[\s\S]*Najm is rendering HTML[\s\S]*<\/template>/);
 console.log('docs content: all assertions passed');
