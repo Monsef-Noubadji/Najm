@@ -27,6 +27,13 @@ together they are the source of truth for how Najm is built and why.
 - **Stub** — a placeholder naming what the RFC will cover and its exact
   blocker; not yet drafted because that blocker is still genuinely absent.
 
+## Reading paths
+
+- Runtime: RFCs 0002, 0004, 0005, and 0010.
+- Compiler and tooling: RFCs 0003, 0009, 0011, 0012, and 0013.
+- Rendering and delivery: RFCs 0006, 0007, 0008, and 0017.
+- Quality and governance: RFCs 0014, 0015, 0016, 0018, 0019, and 0020.
+
 ## Index
 
 | RFC | Title | Status |

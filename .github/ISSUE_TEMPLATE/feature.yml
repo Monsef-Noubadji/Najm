@@ -1,0 +1,19 @@
+name: Feature request
+description: Propose an adopter-facing improvement. Report security vulnerabilities privately.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes: { value: "Do not disclose security issues here; use private vulnerability reporting." }
+  - type: textarea
+    id: motivation
+    attributes: { label: Engineering motivation }
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes: { label: Proposed behavior }
+    validations: { required: true }
+  - type: textarea
+    id: tradeoffs
+    attributes: { label: Alternatives and tradeoffs, description: "Include compatibility, performance, and documentation impact." }
+    validations: { required: true }

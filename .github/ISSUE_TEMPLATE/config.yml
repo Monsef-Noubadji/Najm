@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Monsef-Noubadji/Najm/security/advisories/new
+    about: Report security vulnerabilities privately.
+  - name: Engineering documentation
+    url: https://monsef-noubadji.github.io/Najm/
+    about: Check guides and troubleshooting before filing an issue.

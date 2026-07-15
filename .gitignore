@@ -1,5 +1,8 @@
 # dependencies
 node_modules/
+docs/.vitepress/.temp/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
 
 # build output
 dist/

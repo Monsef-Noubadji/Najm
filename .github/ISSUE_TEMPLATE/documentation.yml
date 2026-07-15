@@ -1,0 +1,15 @@
+name: Documentation correction
+description: Improve engineer-facing documentation. Report security vulnerabilities privately.
+title: "[Docs]: "
+labels: [documentation]
+body:
+  - type: markdown
+    attributes: { value: "Do not disclose security issues here; use private vulnerability reporting." }
+  - type: input
+    id: url
+    attributes: { label: Documentation URL }
+    validations: { required: true }
+  - type: textarea
+    id: correction
+    attributes: { label: Problem and proposed correction }
+    validations: { required: true }
