@@ -8,6 +8,7 @@
     "@monsef-nbj/najm-server": "0.3.0"
   },
   "changesets": [
+    "published-server-roots",
     "stable-stars-align"
   ]
 }

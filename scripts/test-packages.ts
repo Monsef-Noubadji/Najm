@@ -27,7 +27,12 @@ try {
   const packed = JSON.parse(run(['pack', '--json', '--workspaces', '--pack-destination', packsDir])) as Array<{ filename: string }>;
   assert.equal(packed.length, 4, 'npm pack must produce four workspace tarballs');
 
-  writeFileSync(path.join(consumerDir, 'package.json'), JSON.stringify({ name: 'najm-package-smoke', private: true, type: 'module' }, null, 2));
+  writeFileSync(path.join(consumerDir, 'package.json'), JSON.stringify({
+    name: 'najm-package-smoke',
+    private: true,
+    type: 'module',
+    scripts: { build: 'node --import @monsef-nbj/najm-server/build' },
+  }, null, 2));
   const tarballs = packed.map(({ filename }) => path.join(packsDir, filename));
   run(['install', '--ignore-scripts', 'vite@^6', ...tarballs], consumerDir);
 
@@ -60,6 +65,30 @@ try {
   const verification = spawnSync(process.execPath, [verifierPath], { cwd: consumerDir, encoding: 'utf8' });
   assert.equal(verification.status, 0, `${verification.stdout}\n${verification.stderr}`);
   process.stdout.write(verification.stdout);
+
+  const pagesDir = path.join(consumerDir, 'src', 'pages');
+  mkdirSync(pagesDir, { recursive: true });
+  writeFileSync(path.join(consumerDir, 'vite.config.ts'), `
+import { defineConfig } from 'vite';
+import { najm } from '@monsef-nbj/najm-compiler/vite';
+
+export default defineConfig({ plugins: [najm()] });
+`);
+  writeFileSync(path.join(pagesDir, 'index.najm'), `<script>
+import { signal } from '@monsef-nbj/najm/core';
+const count = signal(0);
+</script>
+
+<template>
+  <h1>Najm package consumer</h1>
+  <button (click)={count.value++}>Count: {count}</button>
+</template>
+`);
+  run(['run', 'build'], consumerDir);
+  const manifest = JSON.parse(readFileSync(path.join(consumerDir, 'dist', 'manifest.json'), 'utf8'));
+  assert.equal(manifest.routes[0]?.pathname, '/', 'published server build must discover the adopter page');
+  assert.ok(readFileSync(path.join(consumerDir, 'dist', 'static', 'index.html'), 'utf8').includes('Najm package consumer'));
+  console.log('registry-shaped consumer build verified');
 } finally {
   rmSync(smokeRoot, { recursive: true, force: true });
 }

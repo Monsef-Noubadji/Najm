@@ -1,8 +1,44 @@
 <script>
-console.log("najm up")
+import TodoList from "../components/TodoList.najm";
+
+const screens = Array.from({ length: 6 }, (_, index) => index + 1);
 </script>
+
 <template>
-<main>
-    testinggg.........
-</main>
+  <main>
+    <h1>Partial hydration demo</h1>
+    <p class="meta">
+      The TodoList below is marked <code>client:visible</code>, not
+      <code>client:load</code>. Scroll down to trigger its hydration.
+    </p>
+
+    {#each screens as n}
+      <section class="spacer">
+        <h2>Spacer screen {n}</h2>
+        <p>Keep scrolling - the island is further down.</p>
+      </section>
+    {/each}
+
+    <TodoList client:visible initial={["This island hydrates lazily", "Scroll triggered its import()"]} />
+
+    <section class="spacer">
+      <p>End of page.</p>
+    </section>
+
+    <p><a href="/">Back home</a></p>
+  </main>
 </template>
+
+<style>
+main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; font-family: system-ui, sans-serif; }
+.meta { color: #6b7280; }
+.meta code { background: #f3f4f6; padding: 0.1rem 0.35rem; border-radius: 4px; }
+.spacer {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px dashed #e5e5e5;
+}
+.spacer h2 { color: #9ca3af; }
+</style>

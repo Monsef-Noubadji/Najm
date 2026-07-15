@@ -37,26 +37,28 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build as viteBuild, createServer as createViteServer } from 'vite';
+import { build as viteBuild, createServer as createViteServer, loadConfigFromFile } from 'vite';
 import type { InlineConfig } from 'vite';
 import { najm } from '../compiler/plugin';
 import { listRoutes } from '../router/router';
 import type { RouteEntry } from '../router/router';
 import type { IslandRef } from '../runtime/ssr';
 
-const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // NAJM_APP_ROOT lets a build target an app tree other than this repo's own
 // src/pages/ (e.g. benchmarks/fixtures/ — see RFC-0014) while still using
 // this repo's compiler/runtime. Unset in every normal invocation (najm
 // build, npm run build), so default behavior is completely unchanged.
-const root = process.env.NAJM_APP_ROOT ? path.resolve(process.env.NAJM_APP_ROOT) : repoRoot;
+const root = process.env.NAJM_APP_ROOT ? path.resolve(process.env.NAJM_APP_ROOT) : process.cwd();
 const pagesDir = path.join(root, 'src', 'pages');
 const distDir = path.join(root, 'dist');
-const runtimeIndex = path.join(repoRoot, 'runtime', 'index.ts');
+const runtimeIndex = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
 
 const aliases = [
   { find: '@monsef-nbj/najm/core', replacement: runtimeIndex },
 ];
+const loadedConfig = await loadConfigFromFile({ command: 'build', mode: 'production' }, undefined, root);
+const hasConfiguredNajm = loadedConfig?.config.plugins?.some((plugin: any) => plugin?.name === 'vite-plugin-najm') ?? false;
+const compilerPlugins = hasConfiguredNajm ? [] : [najm()];
 
 /* ------------------------------------------------------------------ */
 /* Manifest shape — written to dist/manifest.json                      */
@@ -142,7 +144,7 @@ fs.mkdirSync(distDir, { recursive: true });
 const buildVite = await createViteServer({
   root,
   appType: 'custom',
-  plugins: [najm()],
+  plugins: compilerPlugins,
   resolve: { alias: aliases },
   server: { middlewareMode: true, hmr: false },
 });
@@ -282,7 +284,7 @@ if (allIslandSrcs.size > 0) {
 
   const clientConfig: InlineConfig = {
     root,
-    plugins: [najm()],
+    plugins: compilerPlugins,
     resolve: { alias: aliases },
     build: {
       outDir: path.join(distDir, 'client'),
@@ -381,7 +383,7 @@ serverEntries['_runtime'] = runtimeEntryFile;
 
 const serverConfig: InlineConfig = {
   root,
-  plugins: [najm()],
+  plugins: compilerPlugins,
   resolve: { alias: aliases },
   build: {
     outDir: path.join(distDir, 'server'),

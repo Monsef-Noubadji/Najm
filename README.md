@@ -4,7 +4,7 @@
 
 [Engineering documentation](https://monsef-noubadji.github.io/Najm/) | [Getting started](https://monsef-noubadji.github.io/Najm/guide/introduction) | [API reference](https://monsef-noubadji.github.io/Najm/reference/runtime) | [Contributing](https://monsef-noubadji.github.io/Najm/contributing/)
 
-> Najm `1.0.0-rc.0` is API-frozen for release-candidate validation. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) before production use.
+> Najm `1.0.0-rc.1` is API-frozen for release-candidate validation. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) before production use.
 
 ## Why Najm
 

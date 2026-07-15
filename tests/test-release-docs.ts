@@ -8,7 +8,7 @@ const activeFiles = [
   'docs/contributing/1.0-release.md', 'docs/.vitepress/config.mts',
 ];
 const active = activeFiles.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
-assert.match(active, /1\.0\.0-rc\.0/);
+assert.match(active, /1\.0\.0-rc\.1/);
 assert.match(active, /@next/);
 assert.match(active, /CLI[\s\S]{0,120}(deferred|repository-only)/i);
 assert.match(active, /\/guide\/release-status/);

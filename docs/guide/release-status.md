@@ -1,6 +1,6 @@
 # Release status
 
-Najm `1.0.0-rc.0` is the API-frozen release candidate for the first stable line. The four public package names, export paths, and Tier 1 contracts are fixed pending evidence-based validation.
+Najm `1.0.0-rc.1` is the API-frozen release candidate for the first stable line. The four public package names, export paths, and Tier 1 contracts are fixed pending evidence-based validation.
 
 ## Adoption policy
 
