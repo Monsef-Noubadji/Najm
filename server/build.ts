@@ -37,6 +37,7 @@
 import fs, { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { performance } from 'node:perf_hooks';
 import { build as viteBuild, createServer as createViteServer, loadConfigFromFile } from 'vite';
 import type { InlineConfig } from 'vite';
 import { najm } from '../compiler/plugin';
@@ -54,6 +55,7 @@ const distDir = path.join(root, 'dist');
 const publishedRuntime = fileURLToPath(import.meta.resolve('@monsef-nbj/najm/core'));
 const sourceRuntime = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'runtime', 'index.ts');
 const runtimeIndex = existsSync(publishedRuntime) ? publishedRuntime : sourceRuntime;
+const buildStartedAt = performance.now();
 
 const aliases = [
   { find: '@monsef-nbj/najm/core', replacement: runtimeIndex },
@@ -107,6 +109,10 @@ function classifyRoute(route: RouteEntry): 'static' | 'dynamic' {
 
 function rootUrl(file: string): string {
   return '/' + path.relative(root, file).split(path.sep).join('/');
+}
+
+function formatDuration(ms: number): string {
+  return ms < 100 ? `${ms.toFixed(1)}ms` : `${Math.round(ms)}ms`;
 }
 
 /**
@@ -166,6 +172,7 @@ interface RenderedStatic {
   styles: Set<string>;
 }
 const renderedStatics: RenderedStatic[] = [];
+const routeRenderTimes = new Map<string, number>();
 
 async function renderRoute(route: RouteEntry): Promise<{ body: string; islands: IslandRef[]; styles: Set<string> }> {
   const pageUrl = rootUrl(route.file);
@@ -191,7 +198,9 @@ async function renderRoute(route: RouteEntry): Promise<{ body: string; islands: 
 }
 
 for (const route of staticRoutes) {
+  const startedAt = performance.now();
   const { body, islands, styles } = await renderRoute(route);
+  routeRenderTimes.set(route.pathname, performance.now() - startedAt);
   for (const isl of islands) allIslandSrcs.add(isl.src);
   renderedStatics.push({ route, body, islands, styles });
 }
@@ -207,6 +216,7 @@ for (const route of staticRoutes) {
 // error as "couldn't discover islands this way" — non-fatal for the
 // build, since the route still compiles for request-time rendering.
 for (const route of dynamicRoutes) {
+  const startedAt = performance.now();
   try {
     const { islands } = await renderRoute(route);
     for (const isl of islands) allIslandSrcs.add(isl.src);
@@ -215,6 +225,8 @@ for (const route of dynamicRoutes) {
     // (e.g. /admin needs a header, /greet/[name] needs a concrete name).
     // Island discovery for these is best-effort; the compiled module is
     // still produced below for request-time rendering either way.
+  } finally {
+    routeRenderTimes.set(route.pathname, performance.now() - startedAt);
   }
 }
 
@@ -485,7 +497,8 @@ for (const { route, body, islands, styles } of renderedStatics) {
     pathname: route.pathname,
     htmlFile: 'static/' + outRel.split(path.sep).join('/'),
   });
-  console.log(`  ✓ static  ${route.pathname.padEnd(24)} -> dist/${'static/' + outRel.split(path.sep).join('/')}`);
+  const renderTime = formatDuration(routeRenderTimes.get(route.pathname) ?? 0);
+  console.log(`  ✓ static  ${route.pathname.padEnd(24)} -> dist/${'static/' + outRel.split(path.sep).join('/')}  ${renderTime}`);
 }
 
 for (const route of dynamicRoutes) {
@@ -500,7 +513,8 @@ for (const route of dynamicRoutes) {
     layoutPaths,
     middlewarePaths,
   });
-  console.log(`  ✓ dynamic ${route.pathname.padEnd(24)} -> dist/${modulePath} (request-time render)`);
+  const renderTime = formatDuration(routeRenderTimes.get(route.pathname) ?? 0);
+  console.log(`  ✓ dynamic ${route.pathname.padEnd(24)} -> dist/${modulePath} (request-time render)  ${renderTime}`);
 }
 
 /* ------------------------------------------------------------------ */
@@ -529,4 +543,4 @@ const manifest: Manifest = {
 };
 fs.writeFileSync(path.join(distDir, 'manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
 
-console.log(`\n  ▲ najm build complete — dist/manifest.json written (${routeManifestEntries.length} routes, ${Object.keys(islandManifest).length} island chunk(s))\n`);
+console.log(`\n  ▲ najm build complete in ${formatDuration(performance.now() - buildStartedAt)} — dist/manifest.json written (${routeManifestEntries.length} routes, ${Object.keys(islandManifest).length} island chunk(s))\n`);

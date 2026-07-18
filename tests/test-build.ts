@@ -112,11 +112,12 @@ fs.rmSync(root, { recursive: true, force: true });
 /* ------------------------------------------------------------------ */
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+let buildOutput = '';
 
 test('npm run build produces a well-formed dist/manifest.json', () => {
   // shell: true — on Windows, npx resolves to npx.cmd, which
   // execFileSync cannot exec directly without going through a shell.
-  execFileSync('npx tsx server/build.ts', { cwd: repoRoot, stdio: 'pipe', shell: true });
+  buildOutput = execFileSync('npx tsx server/build.ts', { cwd: repoRoot, encoding: 'utf8', stdio: 'pipe', shell: true });
 
   const manifestPath = path.join(repoRoot, 'dist', 'manifest.json');
   assert.ok(fs.existsSync(manifestPath), 'dist/manifest.json was not written');
@@ -148,6 +149,12 @@ test('npm run build produces a well-formed dist/manifest.json', () => {
     assert.ok(typeof src === 'string' && src.startsWith('/'), 'island source key must be root-relative');
     assert.ok(typeof builtUrl === 'string' && (builtUrl as string).startsWith('/client/'), 'island built URL must live under /client/');
   }
+});
+
+test('build output includes route render times and total build duration', () => {
+  assert.match(buildOutput, /✓ static\s+\/about\s+-> dist\/static\/about\.html\s+\d+(?:\.\d+)?ms/);
+  assert.match(buildOutput, /✓ dynamic\s+\/greet\/\[name\]\s+-> dist\/server\/greet\/_name_\.js \(request-time render\)\s+\d+(?:\.\d+)?ms/);
+  assert.match(buildOutput, /najm build complete in \d+(?:\.\d+)?ms — dist\/manifest\.json written/);
 });
 
 test('the /about route (no islands, no dynamic segments, no middleware) is classified static in the real build', () => {

@@ -273,7 +273,7 @@ await test('build (REAL subprocess): `tsx cli/najm.ts build` invokes server/buil
   // cost tests/test-build.ts already pays for the npm-script path.
   const { status, stdout } = runCli(['build'], { timeout: 120_000 });
   assert.equal(status, 0, `najm build should exit 0; stdout:\n${stdout}`);
-  assert.match(stdout, /najm build complete — dist\/manifest\.json written/);
+  assert.match(stdout, /najm build complete in \d+(?:\.\d+)?ms — dist\/manifest\.json written/);
 
   const manifestPath = path.join(repoRoot, 'dist', 'manifest.json');
   assert.ok(fs.existsSync(manifestPath));
