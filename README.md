@@ -4,7 +4,7 @@
 
 [Engineering documentation](https://monsef-noubadji.github.io/Najm/) | [Getting started](https://monsef-noubadji.github.io/Najm/guide/introduction) | [API reference](https://monsef-noubadji.github.io/Najm/reference/runtime) | [Contributing](https://monsef-noubadji.github.io/Najm/contributing/)
 
-> Najm `1.0.0` is the first stable release. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) for compatibility and support policy.
+> Najm `1.0.0` is the first stable release. Najm `1.1.0-rc.0` adds the published CLI hardening release. Review the [release status](https://monsef-noubadji.github.io/Najm/guide/release-status) for compatibility and support policy.
 
 ## Why Najm
 
@@ -14,13 +14,28 @@
 - The compiler validates template identifiers and emits coordinated SSR and claim code.
 - File routes support layouts, middleware, dynamic segments, and static generation.
 
-## Install
+## Create an app
 
-Node.js 20 or newer is required.
+Node.js 20 or newer and pnpm are required.
 
 ```bash
-npm install @monsef-nbj/najm @monsef-nbj/najm-compiler @monsef-nbj/najm-router @monsef-nbj/najm-server
+pnpm dlx @monsef-nbj/najm create my-app
+cd my-app
+pnpm run dev
 ```
+
+The `@monsef-nbj/najm` package now ships the `najm` and `create-najm-app` binaries. Generated apps include scripts for the normal engineering loop:
+
+```bash
+pnpm run doctor
+pnpm run lint
+pnpm run build
+pnpm run preview
+```
+
+`najm test` remains deferred in this release; use your project's `package.json` test script.
+
+## Runtime import
 
 ```ts
 import { signal } from '@monsef-nbj/najm/core';
@@ -28,7 +43,7 @@ import { signal } from '@monsef-nbj/najm/core';
 const count = signal(0);
 ```
 
-The standalone CLI remains deferred and repository-only. Follow the [Vite setup](https://monsef-noubadji.github.io/Najm/guide/getting-started) for application integration.
+For existing projects, follow the [manual Vite setup](https://monsef-noubadji.github.io/Najm/guide/getting-started) and install the coordinated packages at the same version.
 
 ## Repository development
 
