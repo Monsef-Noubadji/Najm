@@ -1,5 +1,12 @@
 # @monsef-nbj/najm-server
 
+## 1.1.0-rc.1
+
+### Patch Changes
+
+- Add per-route render timings and total build duration to production build
+  output.
+
 ## 1.1.0-rc.0
 
 ### Patch Changes

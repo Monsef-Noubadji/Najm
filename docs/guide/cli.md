@@ -39,7 +39,7 @@ pnpm exec create-najm-app my-app
 
 ## Deferred test command
 
-`najm test` is intentionally deferred in `1.1.0-rc.0`. Use the generated project's `package.json` test script or your own test runner.
+`najm test` is intentionally deferred in `1.1.0-rc.1`. Use the generated project's `package.json` test script or your own test runner.
 
 ## Exit behavior
 

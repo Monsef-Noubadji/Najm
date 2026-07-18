@@ -1,5 +1,11 @@
 # @monsef-nbj/najm
 
+## 1.1.0-rc.1
+
+### Patch Changes
+
+- Add Astro-style build timing output to the CLI-facing production build logs.
+
 ## 1.1.0-rc.0
 
 ### Minor Changes

@@ -2,9 +2,9 @@
 
 Najm `1.0.0` is the first stable release. The four public package names, export paths, and Tier 1 contracts follow semantic-versioning compatibility guarantees.
 
-## 1.1.0-rc.0 CLI hardening
+## 1.1.0-rc.1 CLI hardening
 
-The next RC promotes the CLI from repo-internal `tsx cli/najm.ts` usage to published package binaries. `@monsef-nbj/najm` becomes the umbrella package for runtime imports and project commands, while `najm test` remains deferred.
+The current RC promotes the CLI from repo-internal `tsx cli/najm.ts` usage to published package binaries. `@monsef-nbj/najm` is the umbrella package for runtime imports and project commands. `najm build` now reports per-route render timings and total build duration, while `najm test` remains deferred.
 
 ## Adoption policy
 

@@ -1,5 +1,11 @@
 # @monsef-nbj/najm-router
 
+## 1.1.0-rc.1
+
+### Patch Changes
+
+- Coordinate the router package with the `1.1.0-rc.1` render-timing RC.
+
 ## 1.1.0-rc.0
 
 ### Patch Changes

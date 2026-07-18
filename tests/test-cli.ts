@@ -79,7 +79,7 @@ await test('najm --help exits 0 and lists create, doctor, lint, preview, and def
 await test('najm --version prints the runtime package version', () => {
   const { stdout, status } = runCli(['--version']);
   assert.equal(status, 0);
-  assert.match(stdout.trim(), /^1\.1\.0-rc\.0$/);
+  assert.match(stdout.trim(), /^1\.1\.0-rc\.1$/);
 });
 
 await test('najm test is explicitly deferred', () => {
