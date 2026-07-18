@@ -23,8 +23,8 @@
     "LICENSE"
   ],
   "bin": {
-    "najm": "./dist/cli.js",
-    "create-najm-app": "./dist/create-app.js"
+    "najm": "dist/cli.js",
+    "create-najm-app": "dist/create-app.js"
   },
   "exports": {
     ".": {

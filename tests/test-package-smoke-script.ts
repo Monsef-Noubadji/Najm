@@ -7,8 +7,8 @@ assert.equal(pkg.scripts['test:packages'], 'tsx scripts/test-packages.ts');
 
 const repoRoot = process.cwd();
 const runtimePackage = JSON.parse(fs.readFileSync(path.join(repoRoot, 'packages', 'najm', 'package.json'), 'utf8'));
-assert.equal(runtimePackage.bin.najm, './dist/cli.js');
-assert.equal(runtimePackage.bin['create-najm-app'], './dist/create-app.js');
+assert.equal(runtimePackage.bin.najm, 'dist/cli.js');
+assert.equal(runtimePackage.bin['create-najm-app'], 'dist/create-app.js');
 assert.ok(runtimePackage.dependencies['@monsef-nbj/najm-compiler']);
 assert.ok(runtimePackage.dependencies['@monsef-nbj/najm-router']);
 assert.ok(runtimePackage.dependencies['@monsef-nbj/najm-server']);
